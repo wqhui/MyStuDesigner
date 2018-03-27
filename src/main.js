@@ -5,10 +5,9 @@ import { BrowserRouter,Route,Link } from 'react-router-dom';
 import {Provider} from 'react-redux';
 
 import Question from './Question.js'
-import store from './Store.js';
 
 ReactDom.render(
-	<Provider store={store}>
+	<Provider>
 		<Question getState={store.getState}></Question>
 	</Provider>,
     document.getElementById('content')
