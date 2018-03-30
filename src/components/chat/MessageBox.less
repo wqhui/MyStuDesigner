@@ -1,0 +1,50 @@
+@displayFlex:{
+	display: flex;
+};
+.main-flex-end{
+    justify-content: flex-end;
+}
+.message-box{
+    @displayFlex();
+    //max-width: 60%;
+    min-height: 35px;
+    margin-top: 20px;
+    .chat-bubble{
+        max-width: 60%;
+        color: #FFF;
+        display: inline-flex;
+        background-color:#43bfbe; 
+        box-shadow:0 0 5px #888888;
+        border-radius: 5px;
+        padding: 6px 12px;
+        position: relative;
+        .chat-bubble-angle{
+            content:"";
+            position: absolute;
+            border-bottom: 18px solid transparent;   
+
+        }
+        .right-angle{
+            border-right: 10px solid #43bfbe;           
+            transform: rotate(-10deg);
+            bottom:-16px;
+            right: 5px;             
+        }
+        .left-angle{
+            transform: rotate(10deg);
+            border-left: 10px solid #43bfbe;     
+            bottom:-16px;
+            left: 5px;            
+        }
+        .phone-recommend{
+            @displayFlex();
+            flex-direction: column;
+            .phone-character{
+                margin-left: 5px;
+            }
+        }
+    }
+}
+
+
+

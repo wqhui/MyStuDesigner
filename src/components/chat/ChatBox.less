@@ -1,0 +1,130 @@
+@displayFlex:{
+	display: flex;
+};
+.chat-area{
+    @displayFlex();
+    flex-direction: column;
+    width: 100%;  
+    height: 100%;
+    border:1px solid #888888;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px #888888;
+    background-color: #FFF;
+}
+@media screen and (min-width: 1200px){
+    .chat-area{
+        @displayFlex();
+        align-items: center;
+        flex-direction: column;
+        flex-grow: 1;
+        width: 960px;  
+        margin: 20px auto;
+        //height: calc(~"100% - 40px");
+        border:1px solid #888888;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px #888888;
+        background-color: #FFF;
+    }
+}
+
+.head-area{
+    @displayFlex();
+    align-self: stretch;//侧轴拉伸
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    background-color: #eee;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    .responced-wait-box{
+        @displayFlex(); 
+        margin-left: 12px;
+        flex-grow: 0.9;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+
+    }  
+    img{
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+    }
+}
+
+
+
+.chat-list-box{
+    align-self: stretch;//侧轴拉伸
+    padding: 0 20px;
+    flex-grow:1;
+    //height: calc(~"100% - 120px");
+}
+
+
+
+.message-box{
+    max-width: 60%;
+    min-height: 35px;
+    margin-top: 20px;
+    .chat-bubble{
+        color: #FFF;
+        display: inline-flex;
+        background-color:#43bfbe; 
+        box-shadow:0 0 5px #888888;
+        border-radius: 5px;
+        padding: 6px 12px;
+        position: relative;
+        .chat-bubble-angle{
+            content:"";
+            position: absolute;
+            border-bottom: 18px solid transparent;   
+            // border-right: 10px solid #43bfbe;           
+            // transform: rotate(-10deg);
+            // bottom:-16px;
+            // right: 5px;  
+            transform: rotate(10deg);
+            border-left: 10px solid #43bfbe;     
+            bottom:-16px;
+            left: 5px;
+
+        }
+        .right-angle{
+            border-right: 10px solid #43bfbe;           
+            transform: rotate(-10deg);
+            bottom:-16px;
+            right: 5px;             
+        }
+        .left-angle{
+            transform: rotate(10deg);
+            border-left: 10px solid #43bfbe;     
+            bottom:-16px;
+            left: 5px;            
+        }
+    }
+}
+
+
+.answer-area{
+    @displayFlex();
+    align-items: center;
+    align-self: stretch;//侧轴拉伸
+    flex-shrink: 0;
+    height: 60px;
+    background-color: #eee;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px; 
+     input{
+        flex-grow: 1;
+        height: 36px;
+        margin-left: 12px;
+     }
+     img{
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        margin: 0 12px;
+     }
+}
+

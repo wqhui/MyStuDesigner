@@ -2,14 +2,12 @@ import {createStore,combineReducers,applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 
 import loggerMiddleware from './middle/loggerMiddleware.js';
-import questionReducer  from './components/question/reducer.js';
-import answerReducer  from './components/answer/reducer.js';
 
 
-const reducer=combineReducers({
-	question:questionReducer,
-	answer:answerReducer
-})
+
+const reducer=(state=[],action)=>{
+	return state;
+};
 
 let middleware = [thunk,loggerMiddleware];
 
