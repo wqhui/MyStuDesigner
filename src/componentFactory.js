@@ -56,9 +56,7 @@ const LazyComponent=(props)=>{
 	console.log('lazy load :',props.componentType);
 	return <div/>
 }
-export const billFactory = (config) => {
-	return React.createElement(components['billform'], {config});
-}
+
 
 function createComponent(allActions,dispatch){
 	// 将原数据操作/服务映射到方法

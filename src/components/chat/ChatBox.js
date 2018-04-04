@@ -2,6 +2,7 @@ import React,{Fragment}  from 'react';
 
 import * as styles from './ChatBox.less'; 
 import MessageBox from './MessageBox.js';
+import QuestionBox from './QuestionBox.js';
 
 class ChatBox extends React.Component{ 
 
@@ -10,7 +11,7 @@ class ChatBox extends React.Component{
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-
+  		return true;
   }
 
   renderPanel(){
@@ -27,10 +28,7 @@ class ChatBox extends React.Component{
 					})
 				}
 			</div>
-			<div className={styles["answer-area"]}>
-				<input type="text"/>
-				<img src="../../img/send.png" alt="发送"/>
-			</div>				
+			<QuestionBox></QuestionBox>					
 		</div>
 	)  	
   }
@@ -56,6 +54,62 @@ let msgList=[
 		isRecommend:false,
 	},{
 		id:2,
+		content:{
+			phoneName:"小米6 4G运存版",
+			advantage:"骁龙835强悍性能，四曲面玻璃设计，性价比极高的水桶机",
+			disadvantage:"弱光条件下拍照成像素质较差"
+		},
+		isLeft:true,
+		isRecommend:true,		
+	},{
+		id:4,
+		content:"2000元手机",
+		isLeft:false,
+		isRecommend:false,
+	},{
+		id:5,
+		content:{
+			phoneName:"小米6 4G运存版",
+			advantage:"骁龙835强悍性能，四曲面玻璃设计，性价比极高的水桶机",
+			disadvantage:"弱光条件下拍照成像素质较差"
+		},
+		isLeft:true,
+		isRecommend:true,		
+	},{
+		id:6,
+		content:"2000元手机",
+		isLeft:false,
+		isRecommend:false,
+	},{
+		id:7,
+		content:{
+			phoneName:"小米6 4G运存版",
+			advantage:"骁龙835强悍性能，四曲面玻璃设计，性价比极高的水桶机",
+			disadvantage:"弱光条件下拍照成像素质较差"
+		},
+		isLeft:true,
+		isRecommend:true,		
+	},{
+		id:8,
+		content:"2000元手机",
+		isLeft:false,
+		isRecommend:false,
+	},{
+		id:9,
+		content:{
+			phoneName:"小米6 4G运存版",
+			advantage:"骁龙835强悍性能，四曲面玻璃设计，性价比极高的水桶机",
+			disadvantage:"弱光条件下拍照成像素质较差"
+		},
+		isLeft:true,
+		isRecommend:true,		
+	},{
+		id:10,
+		content:"2000元手机",
+		isLeft:false,
+		isRecommend:false,
+	},{
+		id:11,
 		content:{
 			phoneName:"小米6 4G运存版",
 			advantage:"骁龙835强悍性能，四曲面玻璃设计，性价比极高的水桶机",

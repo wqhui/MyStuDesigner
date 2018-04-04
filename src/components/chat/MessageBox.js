@@ -9,7 +9,7 @@ class MessageBox extends React.Component{
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-
+  		return true;
   }
 
   renderPanel(props){
