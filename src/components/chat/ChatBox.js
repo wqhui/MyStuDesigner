@@ -4,6 +4,7 @@ import * as styles from './ChatBox.less';
 import MessageBox from './MessageBox.js';
 import QuestionBox from './QuestionBox.js';
 
+
 class ChatBox extends React.Component{ 
 
  constructor (props) {

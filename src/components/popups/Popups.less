@@ -1,0 +1,69 @@
+@displayFlex: {
+    display: flex;
+};
+.show{
+	display: flex !important;
+	z-index: 99999!important;
+}
+.hidden{
+	display: none !important;
+	z-index: -1 !important;
+}
+.help-area{
+	right: 0;
+}
+.pop-area{
+	background-color: #FFF;
+	box-shadow: 0 0 1px;
+	border-radius: 5px;
+	@displayFlex();
+	//padding:15px;
+	flex-direction: column;
+	position: fixed;
+	height: 100%;
+	z-index: 99999;
+	min-width: 250px;
+	min-height: 300px;	
+	.pop-header{
+		@displayFlex();
+		justify-content: space-between;
+		border-bottom: 1px solid #eee;	
+		padding:15px 0;
+		.pop-title{
+			margin-left:15px; 
+		}
+		.pop-close{
+			padding:0 15px;
+		}
+	}
+	.pop-body{
+		flex-grow: 1;
+		padding:15px;
+	}
+	.pop-btn-area{
+		@displayFlex();
+		justify-content: center;
+		align-items: center;
+		border-top: 1px solid #eee;		
+		a{
+			padding:15px;
+			@displayFlex();
+			flex-grow: 0.5;
+			justify-content: center;
+			align-items: center;
+			color: #000000;
+			text-decoration:none;
+
+		}
+		a:active{
+			color: #43bfbe;	
+		}
+		a:hover{
+			color: #FFFFFF;
+			background-color: #43bfbe;
+		}
+		.cancel-btn:hover{
+			background-color: #FF0033 !important;
+		}
+	}
+}

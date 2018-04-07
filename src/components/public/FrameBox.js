@@ -2,6 +2,7 @@ import React,{Fragment}  from 'react';
 
 import * as styles from './FrameBox.less'; 
 
+
 const FrameBox=()=>{
     return (
         <Fragment>       	

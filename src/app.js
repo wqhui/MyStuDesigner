@@ -5,6 +5,7 @@ import {List,Map,fromJS,is} from 'immutable';
 import FrameBox from './components/public/FrameBox.js';
 import ChatBox from './components/chat/ChatBox.js';
 import styles from './static/staticStyle.less';
+import Popups from './components/popups/Popups.js';
 
 class App extends React.Component{ 
 
@@ -20,6 +21,7 @@ class App extends React.Component{
           <div className={styles["container"]}>    
               <FrameBox/>
               <ChatBox></ChatBox>
+              <Popups></Popups>
           </div>
     )
   }
