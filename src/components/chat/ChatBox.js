@@ -3,6 +3,7 @@ import React,{Fragment}  from 'react';
 import * as styles from './ChatBox.less'; 
 import MessageBox from './MessageBox.js';
 import QuestionBox from './QuestionBox.js';
+import Header from './Header.js';
 
 
 class ChatBox extends React.Component{ 
@@ -18,10 +19,7 @@ class ChatBox extends React.Component{
   renderPanel(){
 	return(
 		<div className={styles["chat-area"]}>
-			<div className={styles["head-area"]}>
-				<span className={styles["responced-wait-box"]}>正在码字回复中...</span>
-				<img src="../../img/help.png" alt="帮助"/>
-			</div>	
+			<Header></Header>		
 			<div className={styles["chat-list-box"]}>
 				{ 
 					msgList.map((item)=>{

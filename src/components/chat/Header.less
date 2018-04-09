@@ -1,0 +1,41 @@
+@displayFlex:{
+	display: flex;
+};
+.head-area{
+    @displayFlex();
+    align-self: stretch;//侧轴拉伸
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    flex-shrink: 0;//高度不足不缩小
+    background-color: #eee;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    .logo{
+		transform: rotate(-45deg);
+	    font-family: 'Reem Kufi','Roboto',sans-serif,fantasy;
+	    font-size: 30%;
+	    font-weight: bold;
+	    border: 1px solid;
+	    margin-left: -5px;
+	    padding: 5px;
+	    border-bottom-left-radius: 15px;
+    	border-top-left-radius: 5px;
+    	border-top-right-radius: 15px;
+    }
+    .responced-wait-box{
+        @displayFlex(); 
+        //margin-left: 12px;
+        flex-grow: 0.9;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+
+    }  
+    img{
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        margin-right: 12px;
+    }
+}
