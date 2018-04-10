@@ -23,7 +23,14 @@
 	height: 100%;
 	z-index: 99999;
 	min-width: 250px;
-	min-height: 300px;	
+	min-height: 300px;
+	@media screen and (max-width: 768px){
+		max-width: 40%;	
+	}
+	@media screen  and (min-width: 1200px){
+		max-width: 30%;	
+	}
+	
 	.pop-header{
 		@displayFlex();
 		justify-content: space-between;
@@ -65,5 +72,19 @@
 		.cancel-btn:hover{
 			background-color: #FF0033 !important;
 		}
+	}
+}
+
+.help-msg-box{
+	@displayFlex();
+	flex-direction: column;
+	margin-bottom: 15px;
+	.help-msg-title{
+		line-height: 1.4;
+		font-weight: bold;
+	}
+	.help-msg-content{
+		line-height: 1.4;
+		margin-left: 15px;
 	}
 }

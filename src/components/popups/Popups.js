@@ -37,9 +37,6 @@ class Popups extends React.Component{
 		return false;
 	}
 	
-	getHelpList(){
-		return <div></div>
-	}
 
   	renderPanel(){
 		let closeClassNames=classnames(
@@ -54,18 +51,24 @@ class Popups extends React.Component{
 		if(!isShow){
 			return <div></div>
 		}
+		const {title,content,isPopup}=defaultProps;
 		return(
-
 			<div className={popClassNames}>
 				<div className={styles["pop-header"]}>
-					<span className={styles["pop-title"]}>{defaultProps.title}</span>
+					<span className={styles["pop-title"]}>{title}</span>
 					<span className={closeClassNames} onClick={this.closePopup}>X</span>
 				</div>		
 				<div className={styles["pop-body"]}>
-					{defaultProps.content}	
+					{
+						isPopup?<Fragment>{content}</Fragment>
+							:content.map((item)=>{
+									return <HelpMessageItem key={item.id} {...item}/>				
+							})	
+					}						
+				
 				</div>	
 				{
-					defaultProps.isPopup?
+					isPopup?
 					<div className={styles["pop-btn-area"]}>
 						<a href="www.google.com" onClick={this.closePopup}>确定</a>
 						<a href="www.google.com" className={styles["cancel-btn"]} onClick={this.closePopup}>取消</a>					
@@ -84,9 +87,37 @@ class Popups extends React.Component{
 export default Popups;
 
 
+const HelpMessageItem=({questionName,helpMessage})=>{
+	return (
+		<div className={styles["help-msg-box"]}>
+			<div className={styles["help-msg-title"]}>{questionName}</div>
+			<div className={styles["help-msg-content"]}>{helpMessage}</div>
+		</div>
+	)
+}
+
 const defaultProps={
 	position:"left",
-	title:"我不是标题",
-	content:"我也不是内容",
-	isPopup:false
+	title:"帮助",
+	content:[
+		{
+			id:110676,
+			questionName:"怎么使用？",
+			helpMessage:"你可以这样说：“2000元手机”"
+		},
+		{
+			id:11224667,
+			questionName:"如何反馈？",
+			helpMessage:"聊天框帮助旁边就是反馈按钮哦聊天框帮助旁边就是反馈按钮哦聊天框帮助旁边就是反馈按钮哦聊天框帮助旁边就是反馈按钮哦"
+		}		
+	],
+	isPopup:false,
+}
+
+
+const defaultProps2={
+	position:"left",
+	title:"对话框",
+	content:"聊天框帮助旁边就是反馈按钮哦",
+	isPopup:true,
 }
