@@ -2,7 +2,13 @@
  const base = require('./webpack.base.config.js');
  const webpack = require('webpack');
  module.exports = merge(base, {
-     devtool: 'source-map',
+    devtool: 'source-map',
+    watch: true,
+    watchOptions: {
+        aggregateTimeout: 500,
+        poll: 1000,
+        ignored: /node_modules/
+    },
      devServer: {
          contentBase: "./build", //本地服务器所加载的页面所在的目录
          historyApiFallback: true, //不跳转
@@ -10,8 +16,8 @@
          inline: true //实时刷新
      },
     plugins: [
-	    new webpack.DefinePlugin({
-	      'process.env.NODE_ENV': JSON.stringify('development')
-	    })
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('development')
+        })
   	]
  });

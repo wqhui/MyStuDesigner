@@ -31,25 +31,25 @@ const componentFactory = (meta=Map(), state, type, moreProps = {}) => {
 	if (component) {
 		let allActions = createComponent(Object.assign({}, actions, component.actions),dispatch);	
 		return React.createElement(component, {dispatch, ...moreProps, ...allActions});
-	} else {
-		// 判断是否属于异步加载的控件,得到加载状态(重量级控件)
-		if (componentType === "LAZY") {
-			if (process.env.NODE_ENV === 'production') {
-				require.ensure(['../component/web/KDDesigner'], require=> {
-					components[componentType] = require('../component/web/KDDesigner').default;
-					// 修改shareState的值并刷新对应的表单
-					if (components[componentType]) {
-						dispatch({type: SET_ASYN_COMPONENT, param: {pageId: pageId}});
-					}
-				},'designer');
-			}
-		}else {
-			console.log('can not find the react component of :' + componentType,'id',meta.get('id'));
-			if (components['unknown'] && process.env.NODE_ENV !== 'production') {
-				return React.createElement(components['unknown'], {type: componentType, key: meta.get('id') + '' + moreProps.key});
-			}
-		}
-		return <LazyComponent componentType={componentType} />
+	// } else {
+	// 	// 判断是否属于异步加载的控件,得到加载状态(重量级控件)
+	// 	if (componentType === "LAZY") {
+	// 		if (process.env.NODE_ENV === 'production') {
+	// 			require.ensure(['../component/web/KDDesigner'], require=> {
+	// 				components[componentType] = require('../component/web/KDDesigner').default;
+	// 				// 修改shareState的值并刷新对应的表单
+	// 				if (components[componentType]) {
+	// 					dispatch({type: SET_ASYN_COMPONENT, param: {pageId: pageId}});
+	// 				}
+	// 			},'designer');
+	// 		}
+	// 	}else {
+	// 		console.log('can not find the react component of :' + componentType,'id',meta.get('id'));
+	// 		if (components['unknown'] && process.env.NODE_ENV !== 'production') {
+	// 			return React.createElement(components['unknown'], {type: componentType, key: meta.get('id') + '' + moreProps.key});
+	// 		}
+	// 	}
+	// 	return <LazyComponent componentType={componentType} />
 	}
 }
 const LazyComponent=(props)=>{

@@ -1,4 +1,5 @@
 import React,{Fragment}  from 'react';
+import classnames from "classnames";
 
 import * as styles from './Header.less'; 
 
@@ -26,16 +27,25 @@ class Header extends React.Component{
 		})
 	}
 
+	getHelpBox=()=>{
+		
+	}
+
 	renderPanel=()=>{
 	  	const {isReply}=this.state;
+	  	let helpIconClassName=classnames(
+	  		"fa","fa-question-circle-o",[styles["help-icon"]]
+	  	)
 		return(
 				<div className={styles["head-area"]}>
-					<span className={styles["logo"]}>Make By WqH</span>	
+					<div className={styles["logo"]}>
+						<div className="logo-icon"></div>
+					</div>	
 					{
 						isReply?<span className={styles["responced-wait-box"]}>正在码字回复中...</span>
 						:""
 					}
-					<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1523275059409&di=a2ad7bc11a3416d1aa67950d6989d57c&imgtype=0&src=http%3A%2F%2F58pic.ooopic.com%2F58pic%2F14%2F78%2F30%2F42t58PICSm2.jpg" alt="帮助"/>
+					<span onClick={this.getHelpBox} className={helpIconClassName}></span>
 				</div>
 		)  	
 	}

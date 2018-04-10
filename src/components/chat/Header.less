@@ -12,16 +12,9 @@
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     .logo{
-		transform: rotate(-45deg);
-	    font-family: 'Reem Kufi','Roboto',sans-serif,fantasy;
-	    font-size: 30%;
-	    font-weight: bold;
-	    border: 1px solid;
-	    margin-left: -5px;
-	    padding: 5px;
-	    border-bottom-left-radius: 15px;
-    	border-top-left-radius: 5px;
-    	border-top-right-radius: 15px;
+        margin-left: 12px;
+        width: 40px;
+        height: 40px;
     }
     .responced-wait-box{
         @displayFlex(); 
@@ -31,11 +24,89 @@
         text-overflow:ellipsis;
         white-space: nowrap;
 
-    }  
-    img{
+    }
+    .help-icon{
         flex-shrink: 0;
+        font-size: 36px;
         width: 36px;
         height: 36px;
         margin-right: 12px;
     }
+    .help-icon:hover{
+        color: #43bfbe; 
+    }  
+}
+
+:global(.logo-icon) {
+    @displayFlex();
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    transform: rotate(45deg);
+    width: 2.5em;
+    height: 2.5em;
+
+}
+
+:global(.logo-icon:before), :global(.logo-icon:after) {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 0.25em;
+    //transform: translate(-50%, -50%);
+}
+
+:global(.logo-icon:before) {
+
+    animation: before 2s infinite;
+}
+
+:global(.logo-icon:after) {
+    animation: after 2s infinite;
+}
+
+@keyframes before {
+    0% {
+        width: 0.5em;
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+
+    35% {
+        width: 2.5em;
+        box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
+    }
+
+    70% {
+        width: 0.5em;
+        box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+
+    100% {
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+
+}
+
+@keyframes after {
+    0% {
+        height: 0.5em;
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+    }
+
+    35% {
+        height: 2.5em;
+        box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
+    }
+
+    70% {
+        height: 0.5em;
+        box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
+    }
+
+    100% {
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+    }
+
 }
