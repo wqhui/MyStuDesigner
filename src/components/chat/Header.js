@@ -1,34 +1,30 @@
 import React,{Fragment}  from 'react';
 import classnames from "classnames";
+import {Map} from "immutable";
 
-import * as styles from './Header.less'; 
-
-
+import * as styles from './Header.less';
+import Popups from '../popups/Popups.js';
+             
 
 class Header extends React.Component{ 
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			isReply: true//是否正在回复
+			isReply: true,//是否正在回复
+			isShow:Map({isShow:false})//显示帮助
 		}
-		setTimeout(()=>{
-			this.testIsReply()
-		},2000)
+
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
 		return true;
 	}
 
-	testIsReply=() =>{
+	showHelpBox=()=>{
 		this.setState({
-			isReply:false
-		})
-	}
-
-	getHelpBox=()=>{
-		
+			isShow:Map({isShow:true})
+		})		
 	}
 
 	renderPanel=()=>{
@@ -41,11 +37,13 @@ class Header extends React.Component{
 					<div className={styles["logo"]}>
 						<div className="logo-icon"></div>
 					</div>	
-					{
-						isReply?<span className={styles["responced-wait-box"]}>正在码字回复中...</span>
-						:""
-					}
-					<span onClick={this.getHelpBox} className={helpIconClassName}></span>
+					<span className={styles["responced-wait-box"]}>	
+						{
+							isReply?"正在码字回复中...":""
+						}
+					</span>							
+					<div onClick={this.showHelpBox} className={helpIconClassName}></div>
+					 <Popups isShow={this.state.isShow}></Popups> 
 				</div>
 		)  	
 	}

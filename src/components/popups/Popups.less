@@ -10,7 +10,26 @@
 	z-index: -1 !important;
 }
 .help-area{
-	right: 0;
+	min-width: 0px!important;
+	right: 0px;
+	top:0px;
+	flex-grow: 1;
+	height: 100%;
+	@media screen and (max-width: 768px){
+		max-width: 45%;	
+	}
+	@media screen and (min-width: 768px) and (max-width: 1200px){
+		max-width: 40%;	
+	}
+	@media screen  and (min-width: 1200px){
+		max-width: 30%;	
+	}
+	transition: width 0.3s ease-in;
+	@media screen and (min-width: 1200px){
+		top:20px;
+		height: calc(~"100% - 40px");
+	}
+
 }
 .pop-area{
 	background-color: #FFF;
@@ -20,20 +39,14 @@
 	//padding:15px;
 	flex-direction: column;
 	position: fixed;
-	height: 100%;
 	z-index: 99999;
 	min-width: 250px;
 	min-height: 300px;
-	@media screen and (max-width: 768px){
-		max-width: 40%;	
-	}
-	@media screen  and (min-width: 1200px){
-		max-width: 30%;	
-	}
 	
 	.pop-header{
 		@displayFlex();
 		justify-content: space-between;
+		align-items: center;
 		border-bottom: 1px solid #eee;	
 		padding:15px 0;
 		.pop-title{
@@ -41,6 +54,7 @@
 		}
 		.pop-close{
 			padding:0 15px;
+			font-size: 17px;
 		}
 	}
 	.pop-body{

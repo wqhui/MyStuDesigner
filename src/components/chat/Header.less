@@ -49,6 +49,7 @@
 }
 
 :global(.logo-icon:before), :global(.logo-icon:after) {
+
     content: '';
     position: absolute;
     display: block;
@@ -59,12 +60,11 @@
 }
 
 :global(.logo-icon:before) {
-
-    animation: before 2s infinite;
+    animation: before 3s infinite;
 }
 
 :global(.logo-icon:after) {
-    animation: after 2s infinite;
+    animation: after 3s infinite;
 }
 
 @keyframes before {
@@ -73,12 +73,17 @@
         box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
     }
 
-    35% {
+    25% {
+        width: 2.5em;
+        box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);   
+    }
+
+    50% {
         width: 2.5em;
         box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
     }
 
-    70% {
+    75% {
         width: 0.5em;
         box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
     }
@@ -95,12 +100,17 @@
         box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
     }
 
-    35% {
+    25% {
         height: 2.5em;
         box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
     }
 
-    70% {
+    50% {
+        height: 2.5em;
+        box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
+    }
+
+    75% {
         height: 0.5em;
         box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
     }

@@ -14,14 +14,14 @@ class App extends React.Component{
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-
+      return true;
   }
   render(){
     return(
           <div className={styles["container"]}>    
               <FrameBox/>
               <ChatBox></ChatBox>
-              <Popups></Popups>
+        
           </div>
     )
   }

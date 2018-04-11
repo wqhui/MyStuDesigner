@@ -1,5 +1,7 @@
 import React,{Fragment}  from 'react';
+import { CSSTransitionGroup } from 'react-transition-group'
 import classnames from "classnames";
+import {toJS,is} from "immutable";
 
 import * as styles from './Popups.less'; 
 import "../../font-awesome/css/font-awesome.css";
@@ -15,14 +17,24 @@ class Popups extends React.Component{
 
  	constructor (props) {
    	 	super(props);
-
    	 	this.state={
-   	 		isShow:true
+   	 		isShow:props.isShow?props.isShow.toJS().isShow:false
    	 	}   
   	}
 	
   	shouldComponentUpdate(nextProps, nextState) {
+  		if(this.state.isShow==nextState.isShow){
+  			return false;
+  		}
   		return true;
+  	}
+
+  	componentWillReceiveProps(nextProps) {
+  		if(!is(nextProps,this.props)){//如果改变
+  			this.setState({
+	   	 		isShow:nextProps.isShow.toJS().isShow
+	   	 	})  
+  		}
   	}
 	
 	closePopup=(ev)=>{
@@ -33,12 +45,23 @@ class Popups extends React.Component{
 
 	}
 
-	showPopup(){
+	showPopup=(ev)=>{
+		this.setState({
+			isShow:true
+		})
 		return false;
 	}
 	
 
   	renderPanel(){
+  		let widthStyle={
+  			width:"0px"
+  		}
+
+  		if(this.state.isShow){
+			widthStyle={width:"400px"}
+		}
+
 		let closeClassNames=classnames(
 			[styles["pop-close"]],"fa","fa-times"
 		)
@@ -48,15 +71,13 @@ class Popups extends React.Component{
 		}
 		)
 		let isShow=this.state.isShow;
-		if(!isShow){
-			return <div></div>
-		}
 		const {title,content,isPopup}=defaultProps;
 		return(
-			<div className={popClassNames}>
+			<div  style={widthStyle} className={popClassNames} >
+				
 				<div className={styles["pop-header"]}>
 					<span className={styles["pop-title"]}>{title}</span>
-					<span className={closeClassNames} onClick={this.closePopup}>X</span>
+					<span className={closeClassNames} onClick={this.closePopup}></span>
 				</div>		
 				<div className={styles["pop-body"]}>
 					{
@@ -74,7 +95,7 @@ class Popups extends React.Component{
 						<a href="www.google.com" className={styles["cancel-btn"]} onClick={this.closePopup}>取消</a>					
 					</div>	
 					:""	
-				}	
+				}
 			</div>
 		)  	
   	}
