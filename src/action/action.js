@@ -1,4 +1,4 @@
-
+import {invokeService} from '../api/serviceUtil.js';
 // export function doAction(action,dispatch){
 // 	let newState= mergeState(action,dispatch);
 // 	// console.log('do action.',action.type,action);
@@ -9,13 +9,13 @@
 // 	return newState;
 // }
 
-export function invokeService(args,post=null,dispatch=null){
+export function invokeRequst(args,post=null,dispatch=null){
 	if(dispatch)
 		return _invokeService(args,post,dispatch);
 }
 
 function _invokeService(args,post,dispatch){
-	proxy.invokeService(args,post)
+	invokeService(args,post)
 		.then(data=>{
 			console.log(data)
 			//doPostActions(data,dispatch);
