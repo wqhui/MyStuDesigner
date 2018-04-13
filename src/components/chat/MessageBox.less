@@ -6,10 +6,16 @@
 }
 .message-box{
     @displayFlex();
+    align-items: center;
     //max-width: 60%;
     min-height: 35px;
     margin-top: 20px;
     flex-shrink: 0;//高度不足时，不压缩，自适应高度
+    .chat-bubble-icon{
+        height: 13px;
+        font-size: 13px;
+        margin-right: 2px;   
+    }
     .chat-bubble{
         max-width: 60%;
         color: #FFF;

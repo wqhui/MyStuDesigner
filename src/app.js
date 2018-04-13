@@ -6,6 +6,7 @@ import FrameBox from './components/public/FrameBox.js';
 import ChatBox from './components/chat/ChatBox.js';
 import styles from './static/staticStyle.less';
 import Popups from './components/popups/Popups.js';
+import {postApi} from './api/service.js';
 
 class App extends React.Component{ 
 
@@ -17,6 +18,7 @@ class App extends React.Component{
       return true;
   }
   render(){
+    postApi("http://sm.cumt.edu.cn/Services/ContentServices.asmx/GetContentList",{})
     return(
           <div className={styles["container"]}>    
               <FrameBox/>

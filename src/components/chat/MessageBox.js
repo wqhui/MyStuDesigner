@@ -26,6 +26,7 @@ class MessageBox extends React.Component{
 	return(
 
 		<div className={boxClassName}>
+			<div className={classnames(["fa fa-spinner fa-pulse",[styles["chat-bubble-icon"]]])}></div>
 			<div className={styles["chat-bubble"]}>
 				{
 					isRecommend?<MessageDetail content={content}/>
