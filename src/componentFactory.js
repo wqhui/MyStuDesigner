@@ -6,7 +6,7 @@ import {Map} from 'immutable';
 import defAppState from './defAppState'
 import * as actions from './action/action'
 
-import {SET_ASYN_COMPONENT} from './action/actionnames';
+import getUUID from './util/GetUUID.js';
 
 // 控件集合
 let components;
@@ -24,32 +24,26 @@ export function initialComponents(deviceComponents) {
  * @param  {String} type   		控件类型(可选，如果未传则取meta.get('type'))
  * @return {React.Component} 	React.Component
  */
-const componentFactory = (meta=Map(), state, type, moreProps = {}) => {
-	let componentType = type || meta.get('type');
+const componentFactory = (state, type, moreProps = {}) => {
+	let componentType = type;
 	let component = components[componentType];
 	let dispatch = defAppState.dispatch;
-	if (component) {
+	if (component && componentType !== "popup") {
 		let allActions = createComponent(Object.assign({}, actions, component.actions),dispatch);	
-		return React.createElement(component, {dispatch, ...moreProps, ...allActions});
-	// } else {
-	// 	// 判断是否属于异步加载的控件,得到加载状态(重量级控件)
-	// 	if (componentType === "LAZY") {
-	// 		if (process.env.NODE_ENV === 'production') {
-	// 			require.ensure(['../component/web/KDDesigner'], require=> {
-	// 				components[componentType] = require('../component/web/KDDesigner').default;
-	// 				// 修改shareState的值并刷新对应的表单
-	// 				if (components[componentType]) {
-	// 					dispatch({type: SET_ASYN_COMPONENT, param: {pageId: pageId}});
-	// 				}
-	// 			},'designer');
-	// 		}
-	// 	}else {
-	// 		console.log('can not find the react component of :' + componentType,'id',meta.get('id'));
-	// 		if (components['unknown'] && process.env.NODE_ENV !== 'production') {
-	// 			return React.createElement(components['unknown'], {type: componentType, key: meta.get('id') + '' + moreProps.key});
-	// 		}
-	// 	}
-	// 	return <LazyComponent componentType={componentType} />
+		return React.createElement(component, {key:type+getUUID(),dispatch, ...moreProps, ...allActions});
+	} else {
+		// 判断是否属于异步加载的控件
+		if (componentType === "popup") {
+			require.ensure(['./components/popups/Popups.js'], require=> {
+				components[componentType] = require('./components/popups/Popups.js').default;
+			},'popup');
+		}else {
+			console.log('can not find the react component of :' + componentType,'id',meta.get('id'));
+			// if (components['unknown'] && process.env.NODE_ENV !== 'production') {
+			// 	return React.createElement(components['unknown'], {type: componentType, key: meta.get('id') + '' + moreProps.key});
+			// }
+		}
+		return <LazyComponent componentType={componentType} />
 	}
 }
 const LazyComponent=(props)=>{

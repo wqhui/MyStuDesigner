@@ -4,41 +4,59 @@ import * as styles from './ChatBox.less';
 import MessageBox from './MessageBox.js';
 import QuestionBox from './QuestionBox.js';
 import Header from './Header.js';
+import * as chatAction from '../../action/chatActions.js';
+import ScrollUtil from '../../util/ScrollUtil.js';
 
+class ChatBox extends React.Component {
 
-class ChatBox extends React.Component{ 
+	constructor(props) {
+		super(props)
+	}
 
- constructor (props) {
-    super(props)   
-  }
+	shouldComponentUpdate(nextProps, nextState) {
+		return true;
+	}
 
-  shouldComponentUpdate(nextProps, nextState) {
-  		return true;
-  }
+	componentDidMount() {
+		this.chatBoxDomToBottom()
+	}
 
-  renderPanel(){
-	return(
-		<div className={styles["chat-area"]}>
-			<Header></Header>		
-			<div className={styles["chat-list-box"]}>
-				{ 
-					msgList.map((item)=>{
-						return	<MessageBox key={item.id} {...item}/>
-					})
-				}
+	chatBoxRef = (dom) => {
+		if (dom != null) {
+			this.scrollUtil = new ScrollUtil(dom);
+		}
+
+	}
+
+	chatBoxDomToBottom=()=>{
+		this.scrollUtil && this.scrollUtil.scrollBottomInit();
+	}
+
+	renderPanel(){
+		return(
+			<div className={styles["chat-area"]}>
+				<Header></Header>		
+				<div className={styles["chat-list-box"]} ref={this.chatBoxRef}>
+					{ 
+						msgList.map((item)=>{
+							return	<MessageBox key={item.id} {...item}/>
+						})
+					}
+				</div>
+				<QuestionBox submitQuestion={this.props.submitQuestion}></QuestionBox>					
 			</div>
-			<QuestionBox></QuestionBox>					
-		</div>
-	)  	
-  }
+		)  	
+	}
 
-  render(){
-    return this.renderPanel()
-  }
+	render(){
+		console.log(this.props);
+	    return this.renderPanel()
+	}
+
+	static actions={...chatAction}// 引入接口到this.props中
 }
 
 export default ChatBox;
-
 
 let msgList=[
 	{

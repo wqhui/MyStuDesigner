@@ -68,7 +68,8 @@ class Popups extends React.Component{
 		let popClassNames=classnames({
 			[styles["pop-area"]]:true,
 			[styles["help-area"]]:!defaultProps.isPopup,
-			[styles["moveAnimation"]]:this.state.isShow,			
+			[styles["moveAnimation"]]:this.state.isShow,	
+			[styles["leaveAnimation"]]:!this.state.isShow,						
 		})
 		let isShow=this.state.isShow;
 		const {title,content,isPopup}=defaultProps;

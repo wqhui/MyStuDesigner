@@ -14,7 +14,6 @@ class Header extends React.Component{
 			isReply: true,//是否正在回复
 			isShow:Map({isShow:false})//显示帮助
 		}
-
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -25,6 +24,12 @@ class Header extends React.Component{
 		this.setState({
 			isShow:Map({isShow:true})
 		})		
+	}
+
+	componentDidMount() {
+		this.setState({
+			isShow:Map({isShow:false})
+		})			
 	}
 
 	renderPanel=()=>{

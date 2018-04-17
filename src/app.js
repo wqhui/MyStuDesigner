@@ -6,7 +6,8 @@ import FrameBox from './components/public/FrameBox.js';
 import ChatBox from './components/chat/ChatBox.js';
 import styles from './static/staticStyle.less';
 import Popups from './components/popups/Popups.js';
-import {postApi} from './api/service.js';
+import {parseSubComponents} from './util/ComponentUtil.js';
+
 
 class App extends React.Component{ 
 
@@ -18,12 +19,13 @@ class App extends React.Component{
       return true;
   }
   render(){
-    postApi("http://sm.cumt.edu.cn/Services/ContentServices.asmx/GetContentList",{})
+    const {appState,dispatch}=this.props;
+    console.log(appState);
+    let children=parseSubComponents(["frameBox","chatBox"])
+    //console.log(componentFactory(Map(),appState,"chatBox"));
     return(
           <div className={styles["container"]}>    
-              <FrameBox/>
-              <ChatBox></ChatBox>
-        
+              {children}        
           </div>
     )
   }

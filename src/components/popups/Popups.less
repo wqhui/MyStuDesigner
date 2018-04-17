@@ -24,23 +24,34 @@
 	@media screen  and (min-width: 1200px){
 		max-width: 30%;	
 	}
-	//transition: width 0.3s ease-in;
+	//
 	
 	@media screen and (min-width: 1200px){
 		top:20px;
 		height: calc(~"100% - 40px");
 	}
 
+
+}
+
+.leaveAnimation{
+	//animation:outMove 0.3s;	
+	transition: width 0.2s ease;	
 }
 
 .moveAnimation{
-	animation:mymove 0.3s;	
+	animation:inMove 0.3s;	
 }
 
-@keyframes mymove /*Safari and Chrome*/
+@keyframes inMove /*Safari and Chrome*/
 {
 	from {right:-400px;}
 	to {right:0px;}
+}
+@keyframes outMove /*Safari and Chrome*/
+{
+	from {right:0px;}
+	to {right:-400px;}
 }
 .pop-area{
 	background-color: #FFF;

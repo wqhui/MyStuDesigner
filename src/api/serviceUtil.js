@@ -20,16 +20,16 @@ let tasks = List();
  * @param  {[type]} data    [description]
  * @return {[type]}         [description]
  */
-export function invokeService(urlPath, data) {
-	let url = ROOT_URL + urlPath;
-	batchRun(url, data)
+export function invokeService(methodName, data) {
+	let url = ROOT_URL + methodName;
+	return batchRun(url, data)
 }
 
 /**
  * [batchRun 真正的请求数据]
  * @return {[type]} [description]
  */
-batchRun(url, data) {
+function batchRun(url, data){
 
 	return postApi(url, data)
 }

@@ -1,3 +1,6 @@
+/**
+ * 公共部分的action以及对后台的请求
+ */
 import {invokeService} from '../api/serviceUtil.js';
 // export function doAction(action,dispatch){
 // 	let newState= mergeState(action,dispatch);
@@ -8,20 +11,32 @@ import {invokeService} from '../api/serviceUtil.js';
 // 	},0)
 // 	return newState;
 // }
-
-export function invokeRequst(args,post=null,dispatch=null){
-	if(dispatch)
-		return _invokeService(args,post,dispatch);
+// 
+export function doAction(action,dispatch){
+	let newState=dispatch(action)
+	return newState;
 }
 
-function _invokeService(args,post,dispatch){
-	invokeService(args,post)
+export let newAction=function(type, data){
+	let param={data}
+	return {type, param};
+}
+
+
+export function invokeRequst(methodName,args,dispatch=null){
+	if(dispatch)
+		return _invokeService(methodName,args,dispatch);
+}
+
+function _invokeService(methodName,args,dispatch){
+	invokeService(methodName,args)
 		.then(data=>{
 			console.log(data)
 			//doPostActions(data,dispatch);
 		})
 		.catch(e=>{
-			if(e.message && _.startsWith(e.message, 'dispose action')){
+			//&& _.startsWith(e.message, 'dispose action')
+			if(e.message ){
 				return;
 			}
 			

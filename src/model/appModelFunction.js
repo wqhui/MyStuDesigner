@@ -1,7 +1,7 @@
 /**
  * state的具体操作函数
  */
-
+import {regReducer} from '../reducer/'
 /**
  * [convertActionReduce 对不使用]
  * @param  {[type]} state  [description]
@@ -32,8 +32,8 @@ export function convertAppModelFunctionAction(action) {
  * @param  {[type]} value        [description]
  * @return {[type]}              [description]
  */
-export const setDataProperty = (pageId, propertyPath, value) => state => {
-	let propFullPath = ['page', pageId, 'data'].concat(propertyPath)
+export const setDataProperty = (propertyPath, value) => state => {
+	let propFullPath = ['page', 'data'].concat(propertyPath)
 	return state.setIn(propFullPath, value)
 }
 
@@ -43,7 +43,7 @@ export const setDataProperty = (pageId, propertyPath, value) => state => {
  * @param  {[type]} propertyPath [description]
  * @return {[type]}              [description]
  */
-export const getDataProperty = (pageId, propertyPath) => state => {
-	let propFullPath = ['page', pageId, 'data'].concat(propertyPath)
+export const getDataProperty = (propertyPath) => state => {
+	let propFullPath = ['page','data'].concat(propertyPath)
 	return state.getIn(propFullPath)
 }

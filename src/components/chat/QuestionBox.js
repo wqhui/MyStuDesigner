@@ -25,6 +25,7 @@ class QuestionBox extends React.Component{
   //发送问题
   submitQuestion=(ev)=>{
     	ev.preventDefault();//阻止默认提交
+      this.props.submitQuestion(this.state.question)
     	this.setState({
     		question:""
     	})
