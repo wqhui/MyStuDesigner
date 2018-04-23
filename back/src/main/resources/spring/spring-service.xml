@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 	xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+        	http://www.springframework.org/schema/context 
+        	http://www.springframework.org/schema/context/spring-context.xsd 
+        	http://www.springframework.org/schema/tx 
+        	http://www.springframework.org/schema/tx/spring-tx.xsd
+        	http://www.springframework.org/schema/aop 
+        	http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    
+    <!--
+		配置spring事务管理
+	-->    	
+
+	<!--扫描service包下所有使用注解的类型 -->
+	<context:component-scan base-package="com.ssm.hui.service" />
+ 
+	<!--配置事务管理器  需要注入连接池-->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!--注入数据库连接池  事务控制的数据源-->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!--配置基于注解的声明式事务 默认使用注解来管理事务行为 ，需指定事务管理器-->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- 通过<tx:advice>标签定义事务增强， 需指定事务管理器（默认transactionManager）-->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!--定义属性，声明事务规则 -->
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+			<tx:method name="change*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="query*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 切面表达式 -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<aop:config>
+		<!--第一个*号：表示返回类型，*号表示所有的类型。
+ 			包名：表示需要拦截的包名，后面的两个句点表示当前包和当前包的所有子包，com.sample.service.impl包、子孙包下所有类的方法。
+ 			第二个*号：表示类名，*号表示所有的类。
+ 			*(..):最后这个星号表示方法名，*号表示所有的方法，后面括弧里面表示方法的参数，两个句点表示任何参数。-->
+ 		<!-- 切入点表达式 -->	
+		<aop:pointcut expression="execution(* com.ssm.hui.service..*.*(..))" id="pointcut" />
+		<!-- 配置事务增强、如何切入（advice-ref） -->	
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
+	</aop:config>	
+</beans>

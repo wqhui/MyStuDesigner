@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack --config webpack.prod.config.js",
     "dev": "webpack-dev-server --open --config webpack.dev.config.js",
-    "server": "webpack-dev-server  --open --config webpack.prod.config.js"
+    "prod": "webpack-dev-server  --open --config webpack.prod.config.js"
   },
   "dependencies": {
     "bundle-loader": "^0.5.5",
