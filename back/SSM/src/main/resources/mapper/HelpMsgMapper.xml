@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HlepMsgMapper">
+
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		help_msg
+	</sql>
+	
+	<!--返回 -->
+	<resultMap type="HelpMsg" id="HelpMsgMap">
+		<id column="help_id" property="helpId" />
+		<result column="help_title" property="helpTitle" />
+		<result column="help_content" property="helpContent" />
+		<result column="other_remark" property="otherRemark" />
+	</resultMap>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		help_title,
+		help_content,
+		other_remark
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{helpTitle},
+		#{helpContent},
+		#{otherRemark}
+	</sql>
+	<!-- 查询列表 -->
+	<select id="getHelpList" parameterType="HelpMsg" resultType="HelpMsg">
+		select help_id,
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+	</select>
+	
+	<!-- 插入信息 -->
+	<insert id="saveHelpMsg" parameterType="HelpMsg" useGeneratedKeys="true" keyProperty="helpId">
+		insert into 
+		<include refid="tableName"></include>
+		(<include refid="Field"></include>)
+		values(<include refid="FieldValue"></include>)	
+	</insert>
+
+</mapper>

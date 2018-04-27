@@ -1,0 +1,20 @@
+[{    
+    "id": 1,    
+    "text": "Node 1",  
+    "url":"e",  
+    "state": "closed",    
+    "children": [{    
+        "id": 11,    
+        "text": "Node 11",  
+    	"url":"e"   
+    },{    
+        "id": 12,    
+        "text": "Node 12",  
+    	"url":"e",            
+    }]    
+},{    
+    "id": 2,    
+    "text": "Node 2",    
+    "state": "closed",  
+    "url":"e"     
+}]  

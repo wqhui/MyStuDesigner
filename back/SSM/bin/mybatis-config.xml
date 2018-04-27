@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!--配置全局属性 -->
+	<settings>
+		<!--使用jdbc的getGeneratekeys获取自增主键值 -->
+		<setting name="useGeneratedKeys" value="true" />
+		<!--使用列别名替换列名 默认值为true select name as title(实体中的属性名是title) form table; 
+			开启后mybatis会自动帮我们把表中name的值赋到对应实体的title属性中 -->
+		<setting name="useColumnLabel" value="true" />
+		<!-- 当没有为参数提供特定的 JDBC 类型时，为空值指定 JDBC 类型。 -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+		
+		<!--开启驼峰命名转换Table:create_time到 Entity(createTime) -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		
+		<setting name="logImpl" value="LOG4J"/>
+	</settings>
+
+	<!-- 通过package, 可以直接指定package的名字， mybatis会自动扫描你指定包下面的javabean,  
+     		 并且默认设置一个别名，默认的名字为： javabean 的首字母小写的非限定类名来作为它的别名。  
+      		也可在javabean 加上注解@Alias 来自定义别名， 例如： @Alias(user)   
+	<typeAliases>		
+		<typeAlias type="com.ssm.hui.entity.system.PageData" alias="pd"/>
+		 分页 
+		<typeAlias type="com.ssm.hui.entity.system.Page" alias="Page"/>
+	</typeAliases>
+	 -->
+	
+	
+	<typeHandlers>
+		<typeHandler handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"
+			javaType="java.math.RoundingMode" />
+	</typeHandlers>
+	<!-- 
+	<plugins>
+		<plugin interceptor="com.weixin.plugin.PagePlugin">
+			<property name="dialect" value="mysql" />
+			<property name="pageSqlId" value=".*listPage.*" />
+		</plugin>
+	</plugins> 
+	-->
+	
+</configuration>

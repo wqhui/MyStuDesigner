@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!--
+		配置spring数据源、mybatis整合
+	--> 
+	
+	<!--扫描dao包下所有使用注解的类型 -->
+	<context:component-scan base-package="com.ssm.hui.dao" />
+	
+	<!--配置整合mybatis过程 1.配置数据库相关参数 -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	<!--2.数据库连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<!--基本属性 -->
+		<property name="driverClass" value="${driver}" />
+		<property name="jdbcUrl" value="${url}" />
+		<property name="user" value="${root}" />
+		<property name="password" value="${password}" />
+
+		<!--c3p0私有属性 -->
+		<property name="maxPoolSize" value="30" />
+		<property name="minPoolSize" value="2" />
+		<!--最大空闲时间，60秒内未使用则连接被丢弃。若为0则永不丢弃。默认值: 0 -->
+		<property name="maxIdleTime" value="60" />  
+		<!--关闭连接后不自动commit -->
+		<property name="autoCommitOnClose" value="false" />
+
+		<!--获取连接超时时间 -->
+		<property name="checkoutTimeout" value="10000" />
+		<!--当获取连接失败重试次数 -->
+		<property name="acquireRetryAttempts" value="2" />
+	</bean>
+
+	<!--配置和mybatis整合 -->
+	<!--３.配置SqlSessionFactory对象 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--注入数据库连接池 -->
+		<!--可修改ref的值来切换数据库:dataSource是mysql,dataSource1是sqlite -->
+		<property name="dataSource" ref="dataSource" />
+		<!--指定配置mybatis全局配置文件:mybatis-config.xml -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<!--扫描domain包,使用别名,多个用;隔开 自动取对应包中不包括包名的简单类名作为包括包名的别名 -->
+		<property name="typeAliasesPackage" value="com.ssm.hui.domain" />
+		<!--扫描sql配置文件（mapper）:mapper需要的xml文件 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml" />
+	</bean>
+	
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+
+</beans>
