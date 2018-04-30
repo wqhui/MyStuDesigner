@@ -5,7 +5,8 @@ import {toJS,is} from "immutable";
 
 import * as styles from './Popups.less'; 
 import "../../font-awesome/css/font-awesome.css";
-
+import {invokeService} from "../../api/serviceUtil.js";
+import {eventBus} from '../../util/eventBus.js';
 /**
  * @Author   Lawlite
  * @DateTime 2018-04-07
@@ -17,7 +18,9 @@ class Popups extends React.Component{
 
  	constructor (props) {
    	 	super(props);
+   	 	eventBus.sub("help","help/getHelpList",this.setHelpList)
    	 	this.state={
+   	 		content:[],
    	 		isShow:props.isShow?props.isShow.toJS().isShow:false
    	 	}   
   	}
@@ -37,6 +40,17 @@ class Popups extends React.Component{
   		}
   	}
 	
+	componentDidMount() {
+		invokeService("help/getHelpList",{});
+	}
+
+	setHelpList=(data)=>{
+		console.log(data);
+		this.setState({
+			content:data.result
+		})
+	}
+
 	closePopup=(ev)=>{
 		this.setState({
 			isShow:false
@@ -54,6 +68,7 @@ class Popups extends React.Component{
 	
 
   	renderPanel(){
+  		
   		let widthStyle={
   			width:"0px"
   		}
@@ -71,8 +86,9 @@ class Popups extends React.Component{
 			[styles["moveAnimation"]]:this.state.isShow,	
 			[styles["leaveAnimation"]]:!this.state.isShow,						
 		})
-		let isShow=this.state.isShow;
-		const {title,content,isPopup}=defaultProps;
+		let {isShow,content}=this.state
+		const {title,isPopup}=defaultProps;
+		//let content = data.result;
 		return(
 			<div  style={widthStyle} className={popClassNames} >
 				
@@ -84,7 +100,7 @@ class Popups extends React.Component{
 					{
 						isPopup?<Fragment>{content}</Fragment>
 							:content.map((item)=>{
-									return <HelpMessageItem key={item.id} {...item}/>				
+									return <HelpMessageItem key={item.helpId} {...item}/>				
 							})	
 					}						
 				
@@ -109,11 +125,11 @@ class Popups extends React.Component{
 export default Popups;
 
 
-const HelpMessageItem=({questionName,helpMessage})=>{
+const HelpMessageItem=({helpTitle,helpContent})=>{
 	return (
 		<div className={styles["help-msg-box"]}>
-			<div className={styles["help-msg-title"]}>{questionName}</div>
-			<div className={styles["help-msg-content"]}>{helpMessage}</div>
+			<div className={styles["help-msg-title"]}>{helpTitle}</div>
+			<div className={styles["help-msg-content"]}>{helpContent}</div>
 		</div>
 	)
 }
@@ -121,17 +137,7 @@ const HelpMessageItem=({questionName,helpMessage})=>{
 const defaultProps={
 	position:"left",
 	title:"帮助",
-	content:[
-		{
-			id:110676,
-			questionName:"怎么使用？",
-			helpMessage:"你可以这样说：“2000元手机”"
-		},
-		{
-			id:11224667,
-			questionName:"如何反馈？",
-			helpMessage:"聊天框帮助旁边就是反馈按钮哦聊天框帮助旁边就是反馈按钮哦聊天框帮助旁边就是反馈按钮哦聊天框帮助旁边就是反馈按钮哦"
-		}		
+	content:[	
 	],
 	isPopup:false,
 }

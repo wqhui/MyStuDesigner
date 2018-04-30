@@ -18,9 +18,9 @@ export function postApi(url, data = {}) {
 		return response.json()
 		// return response.text();
 	}).then(jsonObj => {
-			if (jsonObj.success === false && jsonObj.error_code === 100) {
+			if (jsonObj.pd === false) {
 				console.warn(jsonObj.error_desc || 'session timeout');
-				window.location.reload();
+				//window.location.reload();
 				return;
 			}
 			return jsonObj;
