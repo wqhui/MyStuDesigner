@@ -14,12 +14,12 @@
 <script type="text/javascript" >
  
 //删除帮助信息
-function deleteHelpMsg(id){
+function deletePhone(id){
 	$.ajax({	
-    	url:'${pageContext.request.contextPath}/help/deleteHelpMsg',
+    	url:'${pageContext.request.contextPath}/phone/deletePhone',
     	type:'POST',
     	data:{
-			helpId:id
+			phoneId:id
     	},
     	success:function(data){ 
     		if(data.pd===true){
@@ -36,13 +36,13 @@ function deleteHelpMsg(id){
 }
 
 //修改帮助信息
-function updateHelpMsg(helpId){
+function updatePhone(phoneId){
 	$('#win').dialog({
-		width:500,
-		height:400,
+		width:700,
+		height:570,
 		title:'修改帮助信息',
 		cache:false,
-		content:'<iframe src="${pageContext.request.contextPath}/back/mv/help_msg_add?_id='+helpId+'" frameborder="0" width="100%" height="100%"/>'			
+		content:'<iframe src="${pageContext.request.contextPath}/back/mv/phone_add?_id='+phoneId+'" frameborder="0" width="100%" height="100%"/>'			
 	});	
 }
 
@@ -74,7 +74,7 @@ function reloadData(){
 
 $(function(){
 	$('#reForm').datagrid({    
-	    url:'${pageContext.request.contextPath}/help/getHelpList',
+	    url:'${pageContext.request.contextPath}/phone/getPhoneList',
 	    fitColumns:true,
 	    fit:true,
 	    striped:true,/*斑马线*/
@@ -95,11 +95,11 @@ $(function(){
 	    	handler:function(){
 	    		//添加帮助信息
 	    		$('#win').dialog({
-	    			width:500,
-	    			height:400,
+	    			width:700,
+	    			height:570,
 	    			title:'添加帮助信息',
 	    			cache:false,
-	    			content:'<iframe src="${pageContext.request.contextPath}/back/mv/help_msg_add" frameborder="0" width="100%" height="100%"/>'
+	    			content:'<iframe src="${pageContext.request.contextPath}/back/mv/phone_add" frameborder="0" width="100%" height="100%"/>'
 	    		});
 	    	}
 	    }],
@@ -111,11 +111,30 @@ $(function(){
 			}
 		},
 	    columns:[[
-	        {field:'helpTitle',title:'标题',width:'35%'},
-	        {field:'helpContent',title:'内容',width:'50%'},
+	        {field:'phoneName',title:'手机名',width:'15%'},
+	        {field:'phonePrice',title:'价格',width:'15%',formatter:function(value,row,index){
+	        	var val=value+"";
+	        	
+	        	var ary=val.split('.');
+	        	if(ary.length==1){//没有小数点，
+	        		val=val+".00"
+	        	}
+	        	if(ary.length==2){//有小数点
+	        		var ary1=ary[1];
+	        		var j=2-ary1.length;//少了几个0
+	        		if(j=1){
+	        			val+="0";
+	        		}
+	        	}
+
+	        	return '￥'+val;
+	        }},
+	        {field:'advantage',title:'优势',width:'20%'},
+	        {field:'disadvantage',title:'劣势',width:'20%'},
+	        {field:'links',title:'链接',width:'15%'},
 	        {field:'otherRemark',title:'操作',width:'15%',align:'center',formatter:function(value,row,index){
-      		  return "<a  href='#' onclick='updateHelpMsg("+row.helpId+")' class='easyui-linkbutton merger-btn' data-options=iconCls:'icon-edit' style='text-decoration:none margin-right:5px'>修改</a>"
-      		  		+"<a  href='#' onclick='deleteHelpMsg("+row.helpId+")' class='easyui-linkbutton delete-btn' data-options=iconCls:'icon-cancel' style='text-decoration:none margin-right:5px'>删除</a>"
+      		  return "<a  href='#' onclick='updatePhone("+row.phoneId+")' class='easyui-linkbutton merger-btn' data-options=iconCls:'icon-edit' style='text-decoration:none margin-right:5px'>修改</a>"
+      		  		+"<a  href='#' onclick='deletePhone("+row.phoneId+")' class='easyui-linkbutton delete-btn' data-options=iconCls:'icon-cancel' style='text-decoration:none margin-right:5px'>删除</a>"
       				+"<a  href='#' onclick='seeDetailView("+index+")' class='easyui-linkbutton search-btn' data-options=iconCls:'icon-search' style='text-decoration:none'>预览</a>";
       	}} 
 	    ]],
@@ -124,8 +143,8 @@ $(function(){
 	    return '<table><tr>' + 
 	    '<td rowspan=2 style="border:0"></td>' + 
 	    '<td style="border:0">' +
-	    '<p><strong>标题: </strong>' + rowData.helpTitle + '</p>' + 
-	    '<p><strong>内容: </strong>' + rowData.helpContent + '</p>' + 
+	    '<p><strong>优势: </strong>' + rowData.advantage + '</p>' + 
+	    '<p><strong>劣势: </strong>' + rowData.disadvantage + '</p>' + 
 	    '</td>' + 
 	    '</tr></table>'; 
 	    }, 

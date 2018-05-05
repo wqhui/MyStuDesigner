@@ -49,18 +49,58 @@ public class HelpMsgServiceImpl implements HelpMsgService {
 
 	@Override
 	public String saveOrUpdateHelpMsg(HelpMsg hm) {
-		if(hm.getHelpId()==0){//新增
-			try {
+		//System.out.println("hm.get:"+hm.getHelpId());	
+		try {
+			if(hm.getHelpId()==0){//新增
 				baseDao.save("HlepMsgMapper.saveHelpMsg", hm);
-				return "ok";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return "error";
-				
+			}else{
+				baseDao.update("HlepMsgMapper.updateHelpMsgById", hm);
 			}
+			
+			return "ok";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+			
 		}
+	
+	}
 
-		return null;
+	@Override
+	public String deleteHelpMsg(HelpMsg hm) {
+		try {
+			baseDao.delete("HlepMsgMapper.deleteHelpMsg", hm);
+			return "ok";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+			
+		}
+	}
+
+	@Override
+	public HelpMsg getHelpMsgById(HelpMsg hm) {
+		HelpMsg newHm=new HelpMsg();
+		try {
+			newHm=(HelpMsg) baseDao.findForObject("HlepMsgMapper.getHelpMsgById", hm);
+			return newHm;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+			
+		}
+	}
+
+	@Override
+	public String updateHelpMsgById(HelpMsg hm) {
+		try {
+			baseDao.update("HlepMsgMapper.updateHelpMsgById", hm);
+			return "ok";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+			
+		}
 	}
 
 }

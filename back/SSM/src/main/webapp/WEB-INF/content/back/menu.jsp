@@ -21,6 +21,15 @@
 		    		if(data.pd===true){
 		    			setMenu(data.result)
 		    		}
+		    		
+		    		if(data.pd===false && data.msg){
+		    			console.warn(data.msg);
+		    			$.messager.confirm('提示','未登录，点击确定登录',function(r){    
+		    			    if (r){    
+		    			    	location.href="${pageContext.request.contextPath}/back/login"
+		    			    }    
+		    			});  
+		    		}
 		    	},
 		    	error:function(data){  
 					alert("未知错误，请重试！")	
@@ -33,7 +42,6 @@
 				data: data,
 				lines:true,
 				onClick : function(node) {
-					console.log(node)
 					if (!node.children) {//是叶子节点
 						addNewTab(node.text,'${pageContext.request.contextPath}'+ node.url);
 					}else{

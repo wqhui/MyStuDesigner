@@ -31,6 +31,19 @@
 		#{helpContent},
 		#{otherRemark}
 	</sql>
+	
+	<!-- 查询信息 -->
+	<select id="getHelpMsgById" parameterType="HelpMsg" resultType="HelpMsg">
+		select help_id,
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="helpId != null and helpId != ''">
+			and help_id=#{helpId}
+		</if>
+	</select>
+	
 	<!-- 查询列表 -->
 	<select id="getHelpList" parameterType="HelpMsg" resultType="HelpMsg">
 		select help_id,
@@ -47,5 +60,29 @@
 		(<include refid="Field"></include>)
 		values(<include refid="FieldValue"></include>)	
 	</insert>
-
+	
+	<!-- 删除信息  -->
+    <delete id="deleteHelpMsg" parameterType="HelpMsg">
+     	delete 
+     	from 
+     	<include refid="tableName"></include>
+     	where help_id = #{helpId}
+    </delete>
+	
+		
+	<!-- 修改信息 -->
+	<update id="updateHelpMsgById" parameterType="HelpMsg">  
+    update 
+    <include refid="tableName"></include>
+    <set >  
+      <if test="helpTitle != null" >  		
+      	help_title = #{helpTitle},  
+      </if>  
+      <if test="helpTitle != null" >  		
+      	help_content = #{helpContent},  
+      </if>  
+    </set>  
+    where help_id = #{helpId}
+  </update> 
+  
 </mapper>

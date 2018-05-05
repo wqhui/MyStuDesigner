@@ -13,4 +13,7 @@ public interface HelpMsgService {
 	JSONArray getHlepMsgList();
 	String saveHelpMsg(HelpMsg hm);
 	String saveOrUpdateHelpMsg(HelpMsg hm);
+	String deleteHelpMsg(HelpMsg hm);
+	HelpMsg getHelpMsgById(HelpMsg hm);
+	String updateHelpMsgById(HelpMsg hm);
 }

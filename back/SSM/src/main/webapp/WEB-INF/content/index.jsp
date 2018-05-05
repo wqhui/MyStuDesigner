@@ -2,6 +2,6 @@
     pageEncoding="UTF-8"%>
 <html>
 	<script>
-		location.replace('/SSM/login');
+		location.replace('/SSM/back/login');
 	</script>
 </html>

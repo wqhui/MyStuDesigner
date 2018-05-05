@@ -21,24 +21,23 @@
 	<!-- 字段 -->
 	<sql id="Field">
 		login_name,
-		display_name,
-		password
+		display_name
 	</sql>
 
 	<!-- 字段值 -->
 	<sql id="FieldValue">
 		#{loginName},
 		#{displayName},
-		#{password},
+		#{password}
 	</sql>
 	<!-- 查询信息 -->
 	<select id="getAdminByCondition" parameterType="Admin" resultType="Admin">
-		select admin_id,
+		select admin_id,password,
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
 		where 1=1
-		<if test="adminId != null and adminId != ''">
+		<if test="adminId != null and adminId != '' and adminId != 0">
 			and admin_id = #{adminId}
 		</if>
 		<if test="loginName != null and loginName != ''">
@@ -46,12 +45,47 @@
 		</if>
 	</select>
 	
+	<!-- 查询列表 -->
+	<select id="getAdminList" parameterType="Admin" resultType="Admin">
+		select admin_id,
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+	</select>
+	
 	<!-- 插入信息 -->
-	<insert id="saveAdmin" parameterType="Admin" useGeneratedKeys="true" keyProperty="admin_id">
+	<insert id="saveAdmin" parameterType="Admin" useGeneratedKeys="true" keyProperty="adminId">
 		insert into 
 		<include refid="tableName"></include>
 		(<include refid="Field"></include>)
-		values(#{loginName},#{displayName},#{password})	
+		values(<include refid="FieldValue"></include>)	
 	</insert>
-
+	
+	<!-- 删除信息  -->
+    <delete id="deleteAdmin" parameterType="Admin">
+     	delete 
+     	from 
+     	<include refid="tableName"></include>
+     	where admin_id = #{adminId}
+    </delete>
+    
+    <!-- 修改信息 -->
+	<update id="updateAdminById" parameterType="Admin">  
+		update 
+		<include refid="tableName"></include>
+		<set >  
+		  <if test="loginName != null and loginName != ''" >  		
+		  	login_name = #{loginName},  
+		  </if>  
+		  <if test="displayName != null and displayName != ''" >  		
+		  	display_name = #{displayName},  
+		  </if>  
+		  <if test="password != null and password != ''" >  		
+		  	password = #{password},  
+		  </if>  
+		</set>  
+		where admin_id = #{adminId}
+	</update>
+		
 </mapper>

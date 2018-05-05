@@ -12,14 +12,14 @@
 }
 </style>
 <script type="text/javascript" >
- 
-//删除帮助信息
-function deleteHelpMsg(id){
+var ADMIN_NAME = '${adminLoginName}' || ''; 
+//删除信息
+function deleteAdmin(id){
 	$.ajax({	
-    	url:'${pageContext.request.contextPath}/help/deleteHelpMsg',
+    	url:'${pageContext.request.contextPath}/admin/deleteAdmin',
     	type:'POST',
     	data:{
-			helpId:id
+			adminId:id
     	},
     	success:function(data){ 
     		if(data.pd===true){
@@ -35,14 +35,14 @@ function deleteHelpMsg(id){
     })
 }
 
-//修改帮助信息
-function updateHelpMsg(helpId){
+//修改信息
+function updateAdmin(adminId){
 	$('#win').dialog({
 		width:500,
-		height:400,
-		title:'修改帮助信息',
+		height:200,
+		title:'修改密码',
 		cache:false,
-		content:'<iframe src="${pageContext.request.contextPath}/back/mv/help_msg_add?_id='+helpId+'" frameborder="0" width="100%" height="100%"/>'			
+		content:'<iframe src="${pageContext.request.contextPath}/back/mv/admin_update?_id='+adminId+'" frameborder="0" width="100%" height="100%"/>'			
 	});	
 }
 
@@ -74,7 +74,7 @@ function reloadData(){
 
 $(function(){
 	$('#reForm').datagrid({    
-	    url:'${pageContext.request.contextPath}/help/getHelpList',
+	    url:'${pageContext.request.contextPath}/admin/getAdminList',
 	    fitColumns:true,
 	    fit:true,
 	    striped:true,/*斑马线*/
@@ -97,9 +97,9 @@ $(function(){
 	    		$('#win').dialog({
 	    			width:500,
 	    			height:400,
-	    			title:'添加帮助信息',
+	    			title:'添加用户信息',
 	    			cache:false,
-	    			content:'<iframe src="${pageContext.request.contextPath}/back/mv/help_msg_add" frameborder="0" width="100%" height="100%"/>'
+	    			content:'<iframe src="${pageContext.request.contextPath}/back/mv/admin_add" frameborder="0" width="100%" height="100%"/>'
 	    		});
 	    	}
 	    }],
@@ -111,29 +111,23 @@ $(function(){
 			}
 		},
 	    columns:[[
-	        {field:'helpTitle',title:'标题',width:'35%'},
-	        {field:'helpContent',title:'内容',width:'50%'},
-	        {field:'otherRemark',title:'操作',width:'15%',align:'center',formatter:function(value,row,index){
-      		  return "<a  href='#' onclick='updateHelpMsg("+row.helpId+")' class='easyui-linkbutton merger-btn' data-options=iconCls:'icon-edit' style='text-decoration:none margin-right:5px'>修改</a>"
-      		  		+"<a  href='#' onclick='deleteHelpMsg("+row.helpId+")' class='easyui-linkbutton delete-btn' data-options=iconCls:'icon-cancel' style='text-decoration:none margin-right:5px'>删除</a>"
-      				+"<a  href='#' onclick='seeDetailView("+index+")' class='easyui-linkbutton search-btn' data-options=iconCls:'icon-search' style='text-decoration:none'>预览</a>";
+	        {field:'displayName',title:'用户名',width:'25%'},
+	        {field:'loginName',title:'登录名',width:'25%'},
+	        {field:'password',title:'密码',width:'35%',formatter:function(value,row,index){
+	        	return "---"
+	        }},
+	        {field:'act',title:'操作',width:'15%',align:'center',formatter:function(value,row,index){
+	        	var str="<a  href='#' onclick='deleteAdmin("+row.adminId+")' class='easyui-linkbutton delete-btn' data-options=iconCls:'icon-cancel' style='text-decoration:none margin-right:5px'>删除</a>";
+	        	if(ADMIN_NAME==="root"){
+	        		str="<a  href='#' onclick='updateAdmin("+row.adminId+")' class='easyui-linkbutton merger-btn' data-options=iconCls:'icon-edit' style='text-decoration:none margin-right:5px'>修改密码</a>"+str
+	        	}
+      		  return str;
       	}} 
 	    ]],
-	    view: detailview, 
-	    detailFormatter: function(rowIndex, rowData){ 
-	    return '<table><tr>' + 
-	    '<td rowspan=2 style="border:0"></td>' + 
-	    '<td style="border:0">' +
-	    '<p><strong>标题: </strong>' + rowData.helpTitle + '</p>' + 
-	    '<p><strong>内容: </strong>' + rowData.helpContent + '</p>' + 
-	    '</td>' + 
-	    '</tr></table>'; 
-	    }, 
 	    emptyMsg:'<span style="color:red">暂无数据</span>',
-	    onLoadSuccess:function(){
+	    onLoadSuccess:function(data){
 	    	$("a.merger-btn").linkbutton(); 
 	    	$("a.delete-btn").linkbutton(); 
-	    	$("a.search-btn").linkbutton();
 	    }
 	    
 	    

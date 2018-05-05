@@ -1,5 +1,10 @@
 package com.ssm.hui.controller;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,28 +26,15 @@ public class MenuController  extends BaseController{
 	
 	@RequestMapping("/getMenu")
 	@ResponseBody
-	public Object getMenu(){
+	public Object getMenu(HttpServletRequest request){
 		ModelMap mm=this.getModelMap();
-		JSONArray ja=new JSONArray();
-		for(int i=1;i<3;i++){
-			JSONObject jo=new JSONObject();
-			jo.put("id", i);
-			jo.put("text","node" +i);
-			jo.put("url", i);
-			
-			if(i==1){
-				JSONArray ja2=new JSONArray();
-				JSONObject jo2=new JSONObject();
-				jo2.put("id", i+100);
-				jo2.put("text","node" +i);
-				jo2.put("url", "/back/help_msg");
-				ja2.add(jo2);					
-				jo.put("state","closed");
-				jo.put("children",ja2);
-			}
-			  
-			ja.add(jo);
-		}
+		Boolean loginPd=this.isLogin(request.getSession());
+		if(loginPd==false){
+			mm.addAttribute("msg","not login");
+			return mm;	
+		}				
+		String menuStringArray= "[{id:\"1\",text:\"管理员管理\",url:\"/back/admin_manager\"},{id:\"2\",text:\"帮助信息管理\",url:\"/back/help_msg\"},{id:\"3\",text:\"手机信息管理\",url:\"/back/phone_manager\"}]";
+		JSONArray ja=JSONArray.fromObject(menuStringArray);
 		mm.replace("pd", true);
 		mm.addAttribute("result",ja);
 		return mm;	

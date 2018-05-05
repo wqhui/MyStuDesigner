@@ -2,6 +2,7 @@ package com.ssm.hui.service;
 
 import com.ssm.hui.domain.Admin;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /** 
@@ -10,6 +11,11 @@ import net.sf.json.JSONObject;
  * @version 1.0 
  **/
 public interface AdminService {
-	String saveAdmin(Admin am);
+	String saveAdmin(Admin am);	
 	JSONObject adminLogin(Admin am);
+	JSONArray getAdminList();
+	String saveOrUpdateAdmin(Admin am);
+	String deleteAdmin(Admin am);
+	Admin getAdminById(Admin am);
+	String updateAdminPsw(Admin am);
 }

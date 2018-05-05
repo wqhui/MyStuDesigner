@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PhoneMapper">
+
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		phone
+	</sql>
+	
+	<!--返回 -->
+	<resultMap type="Phone" id="PhoneMap">
+		<id column="phone_id" property="phoneId" />
+		<result column="phone_name" property="phoneName" />
+		<result column="phone_price" property="phonePrice" />
+		<result column="advantage" property="advantage" />
+		<result column="disadvantage" property="disadvantage" />
+		<result column="links" property="links" />
+	</resultMap>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		phone_name,
+		phone_price,
+		advantage,
+		disadvantage,
+		links
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{phoneName},
+		#{phonePrice},
+		#{advantage},
+		#{disadvantage},
+		#{links}
+	</sql>
+	
+	<!-- 查询信息 -->
+	<select id="getPhone" parameterType="Phone" resultType="Phone">
+		select phone_id,
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="phoneId != null and phoneId != '' and phoneId != 0">
+			and phone_id=#{phoneId}
+		</if>
+		<if test="phoneName != null and phoneName != ''">
+			and phone_name=#{phoneName}
+		</if>
+	</select>
+	
+	<!-- 查询列表 -->
+	<select id="getPhoneList" parameterType="Phone" resultType="Phone">
+		select phone_id,
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+	</select>
+	
+	<!-- 插入信息 -->
+	<insert id="savePhone" parameterType="Phone" useGeneratedKeys="true" keyProperty="phoneId">
+		insert into 
+		<include refid="tableName"></include>
+		(<include refid="Field"></include>)
+		values(<include refid="FieldValue"></include>)	
+	</insert>
+	
+	<!-- 删除信息  -->
+    <delete id="deletePhone" parameterType="Phone">
+     	delete 
+     	from 
+     	<include refid="tableName"></include>
+     	where phone_id = #{phoneId}
+    </delete>
+	
+		
+	<!-- 修改信息 -->
+	<update id="updatePhoneById" parameterType="Phone">  
+	    update 
+	    <include refid="tableName"></include>
+	    <set >  
+		    <if test="phoneName != null and phoneName != ''">
+				phone_name=#{phoneName},
+			</if> 
+			<if test="phonePrice != null and phonePrice != 0">
+				phone_price=#{phonePrice},
+			</if>  
+			<if test="advantage != null and advantage != ''">
+				advantage=#{advantage},
+			</if> 
+			<if test="disadvantage != null and disadvantage != ''">
+				disadvantage=#{disadvantage},
+			</if> 	
+			<if test="links != null and links != ''">
+				links=#{links}
+			</if>					
+	    </set>  
+	    where phone_id = #{phoneId}
+  	</update> 
+  
+</mapper>
