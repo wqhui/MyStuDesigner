@@ -12,20 +12,20 @@ import {parseSubComponents} from './util/ComponentUtil.js';
 class App extends React.Component{ 
 
  constructor (props) {
-    super(props)   
+    super(props);
+    this.childrenContent=parseSubComponents([{type:"frameBox"},{type:"chatBox"}]);   
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-      return true;
+      return true;    
   }
   render(){
     const {appState,dispatch}=this.props;
-    console.log(appState);
-    let children=parseSubComponents(["frameBox","chatBox"])
+  
     //console.log(componentFactory(Map(),appState,"chatBox"));
     return(
           <div className={styles["container"]}>    
-              {children}        
+              {this.childrenContent}        
           </div>
     )
   }
@@ -44,4 +44,9 @@ const mapDispatchToProps=(dispatch,oweProps)=>{
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect()(App);
+
+
+const Bill =()=>{
+  
+}

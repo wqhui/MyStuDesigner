@@ -22,7 +22,6 @@ const structure=Map({
 			id:3,
 			content:"2000元手机",
 			isLeft:false,
-			isRecommend:false,
 			messageType:1,
 		},{
 			id:2,

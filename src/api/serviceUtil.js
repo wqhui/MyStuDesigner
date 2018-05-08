@@ -21,17 +21,17 @@ let tasks = List();
  * @param  {[type]} data    [description]
  * @return {[type]}         [description]
  */
-export function invokeService(methodName, data) {
-	return batchRun(methodName, data)
+export function invokeService(requestMapping,methodName, data,mark='') {
+	return batchRun(requestMapping,methodName, data,mark)
 }
 
 /**
  * [batchRun 真正的请求数据]
  * @return {[type]} [description]
  */
-function batchRun(methodName, data){
-	let url = ROOT_URL + methodName;
+function batchRun(requestMapping,methodName, data,mark){
+	let url = ROOT_URL + requestMapping+'/'+methodName;
 	return postApi(url, data).then(data=>{
-		eventBus.pub(methodName.split("/")[0],methodName,data)	
+		eventBus.pub(requestMapping,methodName+mark,data)	
 	})
 }

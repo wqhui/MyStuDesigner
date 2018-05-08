@@ -7,8 +7,11 @@ import componentFactory from '../componentFactory.js';
  * @param  {Immutable.Map} appState [appState]
  * @return {Array}          [子控件React Component]
  */
-export function parseSubComponents(children = List(), appState) {
-	return children.map(type => {
-		return componentFactory(appState,type);
+export function parseSubComponents(children = [], appState) {
+	return children.map(item => {
+		if(item.children){
+			parseSubComponents(item.children,appState)
+		}
+		return componentFactory(appState,item.type);
 	});
 }

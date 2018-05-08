@@ -1,3 +1,4 @@
+import {List} from 'immutable';
 /**
  * state的具体操作函数
  */
@@ -26,19 +27,36 @@ export function convertAppModelFunctionAction(action) {
 }
 
 /**
- * [根据页面id等属性设置state]
+ * [新增或替换state]
  * @param  {[type]} pageId       [description]
  * @param  {[type]} propertyPath [description]
  * @param  {[type]} value        [description]
  * @return {[type]}              [description]
  */
 export const setDataProperty = (propertyPath, value) => state => {
-	let propFullPath = ['page', 'data'].concat(propertyPath)
-	return state.setIn(propFullPath, value)
+	let propFullPath = ['page', 'data'].concat(propertyPath);
+	return state.setIn(propFullPath, value);
+	
 }
 
 /**
- * [根据页面id等属性获得state]
+ * [新增或替换state]
+ * @param  {[type]} pageId       [description]
+ * @param  {[type]} propertyPath [description]
+ * @param  {[type]} value        [description]
+ * @return {[type]}              [description]
+ */
+export const setListItem = (propertyPath, value) => state => {
+	let propFullPath = ['page', 'data'].concat(propertyPath);
+	let willState=state.getIn(propFullPath) 
+	if(typeof willState != "undefined" && List.isList(willState)){
+		return state.setIn(propFullPath, willState.push(value));
+	}
+	return state	
+}
+
+/**
+ * [根获得state]
  * @param  {[type]} pageId       [description]
  * @param  {[type]} propertyPath [description]
  * @return {[type]}              [description]

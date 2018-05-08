@@ -1,7 +1,7 @@
 import React,{Fragment}  from 'react';
 import { CSSTransitionGroup } from 'react-transition-group'
 import classnames from "classnames";
-import {toJS,is} from "immutable";
+import {fromJS,List,is} from "immutable";
 
 import * as styles from './Popups.less'; 
 import "../../font-awesome/css/font-awesome.css";
@@ -18,15 +18,16 @@ class Popups extends React.Component{
 
  	constructor (props) {
    	 	super(props);
-   	 	eventBus.sub("help","help/getHelpList",this.setHelpList)
+   	 	eventBus.sub("help","getHelpList",this.setHelpList)
    	 	this.state={
-   	 		content:[],
+   	 		content:List([]),
    	 		isShow:props.isShow?props.isShow.toJS().isShow:false
    	 	}   
   	}
 	
   	shouldComponentUpdate(nextProps, nextState) {
-  		if(this.state.isShow==nextState.isShow){
+  		let {isShow,content}=this.state;
+  		if(isShow==nextState.isShow && is(nextState.content,content)){
   			return false;
   		}
   		return true;
@@ -41,13 +42,12 @@ class Popups extends React.Component{
   	}
 	
 	componentDidMount() {
-		invokeService("help/getHelpList",{});
+		invokeService("help","getHelpList",{});
 	}
 
 	setHelpList=(data)=>{
-		console.log(data);
 		this.setState({
-			content:data.result
+			content:fromJS(data.result)
 		})
 	}
 
@@ -86,9 +86,10 @@ class Popups extends React.Component{
 			[styles["moveAnimation"]]:this.state.isShow,	
 			[styles["leaveAnimation"]]:!this.state.isShow,						
 		})
-		let {isShow,content}=this.state
+		let {isShow,content}=this.state;
+
 		const {title,isPopup}=defaultProps;
-		//let content = data.result;
+		content = content.toJS();
 		return(
 			<div  style={widthStyle} className={popClassNames} >
 				

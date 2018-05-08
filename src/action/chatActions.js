@@ -5,12 +5,10 @@
  */
 import {regReducer} from "../reducer/index.js";
 import * as names from './actionnames.js';
-import {setDataProperty} from '../model/appModelFunction.js';
+import {setDataProperty,getDataProperty,setListItem} from '../model/appModelFunction.js';
 import * as action from './action.js';
 
-export function submitQuestion(value){
 
-}
 
 export function invokeMethodOnly(methodName, args) {
 	return (dispatch, getState) => {
@@ -18,11 +16,23 @@ export function invokeMethodOnly(methodName, args) {
 		action.invokeRequst(methodName, args, dispatch);
 	}
 }
-
-export function setQuestion(value){
+export function invokeDispatchOnly(type,data){
 	return (dispatch, getState) => {
-		return setDataProperty("question",value)(getState());
-	}		
+		action.doAction(type,data,dispatch)	
+	}
+}
+export function getMsgList(){
+	return (dispatch, getState) => {
+		return getDataProperty("msgList")(getState());
+	}	
 }
 
-regReducer(names.SET_QUESTION,setQuestion)
+export function addMsgItem(state,param){
+	if(state){
+		return setListItem("msgList",param.data)(state);
+	}
+	return (dispatch, getState) => {
+		setListItem("msgList",param.data)(getState());
+	}	
+}
+regReducer(names.ADD_MSG_ITEM,addMsgItem)

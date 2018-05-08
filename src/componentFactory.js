@@ -60,6 +60,7 @@ function createComponent(allActions,dispatch){
 		actionCreator[prop] = (...args) => {
 			return dispatch(action(...args));
 		}
+
 	}
 	return actionCreator;
 }

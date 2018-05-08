@@ -11,7 +11,6 @@ class Header extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			isReply: true,//是否正在回复
 			isShow:Map({isShow:false})//显示帮助
 		}
 	}
@@ -33,7 +32,8 @@ class Header extends React.Component{
 	}
 
 	renderPanel=()=>{
-	  	const {isReply}=this.state;
+	  	const {isCallShow}=this.props;
+	  	let isCallShowJs=isCallShow.toJS().isCallShow;	  	
 	  	let helpIconClassName=classnames(
 	  		"fa","fa-question-circle-o",[styles["help-icon"]]
 	  	)
@@ -44,10 +44,10 @@ class Header extends React.Component{
 					</div>	
 					<span className={styles["responced-wait-box"]}>	
 						{
-							isReply?"正在码字回复中...":""
+							isCallShowJs?"正在码字回复中...":""
 						}
 					</span>							
-					<div onClick={this.showHelpBox} className={helpIconClassName}></div>
+					<div onClick={this.showHelpBox} className={helpIconClassName}  title="帮助"></div>
 					 <Popups isShow={this.state.isShow}></Popups> 
 				</div>
 		)  	

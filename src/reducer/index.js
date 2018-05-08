@@ -1,4 +1,4 @@
-import {Map} from 'immutable';
+import {Map,fromJS} from 'immutable';
 import * as names from '../action/actionnames.js';
 
 let reducers = {};//reducer集合
@@ -13,6 +13,15 @@ export  function regReducer(action_type,reduce){
 	reducers[action_type] = reduce;
 }
 
+let defaultStateMsg=Map(fromJS({page:{data:{msgList:[
+		{
+			id:1,
+			content:"如果不会查询可以点击右上角问号查看帮助哦~",
+			isLeft:true,
+			messageType:0
+		}
+	]}}}));
+
 /**
  * defaultReduce[默认reducer方法]
  * @param  {[type]} state         [全部的state]
@@ -20,7 +29,7 @@ export  function regReducer(action_type,reduce){
  * @param  {[type]} options.param [其他参数]
  * @return {[type]}               [description]
  */
-let defaultReduce=(state=Map(),{type, param})=>{
+let defaultReduce=(state=defaultStateMsg,{type, param})=>{
 	if(reducers[type]){
 		let newstate=reducers[type](state,param);
 		return newstate;

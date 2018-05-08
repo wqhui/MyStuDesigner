@@ -12,8 +12,11 @@ import {invokeService} from '../api/serviceUtil.js';
 // 	return newState;
 // }
 // 
-export function doAction(action,dispatch){
-	let newState=dispatch(action)
+// 
+// 
+export function doAction(type,data,dispatch){
+	let action=newAction(type, data);
+	let newState=dispatch(action);
 	return newState;
 }
 
