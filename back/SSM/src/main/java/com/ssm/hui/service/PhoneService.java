@@ -16,4 +16,5 @@ public interface PhoneService {
 	String deletePhone(Phone p);
 	Phone getPhoneById(Phone p);
 	String updatePhoneById(Phone p);
+	JSONArray getPhoneListByList(JSONArray ja);
 }

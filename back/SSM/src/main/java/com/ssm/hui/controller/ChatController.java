@@ -26,8 +26,9 @@ public class ChatController extends BaseController {
 	public Object chatQuestion(String question,HttpServletRequest request){
 		ModelMap mm=this.getModelMap();	
 		String ip=this.getIpAddr(request);
-		JSONObject requestMsgByTL=this.requestMsgByTL("1000");
+		JSONObject requestMsgByTL=this.requestMsgByTL(question);
 		String jsonStr=this.httpPost(requestMsgByTL);
+
 		JSONObject jo=JSONObject.fromObject(jsonStr);
 		JSONArray ja=(JSONArray) jo.get("results");
 		if(ja!=null){
@@ -36,11 +37,15 @@ public class ChatController extends BaseController {
 			String resultStr=jaRjo.get("text").toString();				
 			
 			if(resultStr.substring(0,1).equals("[") && resultStr.substring(1,2).equals("{")){//是否自定义格式的数组
-				JSONArray phoneArray=JSONArray.fromObject(resultStr);
+				JSONArray phoneArray=phoneService.getPhoneListByList(JSONArray.fromObject(resultStr));
+				if(phoneArray==null){
+					return mm;
+				}
 				mm.addAttribute("result",phoneArray);
 			}else{
 				mm.addAttribute("result",resultStr);
 			}
+			mm.replace("pd",true );
 			
 		}		
 		mm.addAttribute("ip", ip);

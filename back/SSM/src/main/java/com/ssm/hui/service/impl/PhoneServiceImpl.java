@@ -1,5 +1,6 @@
 package com.ssm.hui.service.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import com.ssm.hui.domain.Phone;
 import com.ssm.hui.service.PhoneService;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /** 
  * @author hui 
@@ -90,6 +92,29 @@ public class PhoneServiceImpl implements PhoneService {
 			return "error";
 			
 		}
+	}
+
+	@Override
+	public JSONArray getPhoneListByList(JSONArray ja) {
+		Iterator iter =ja.iterator();
+		JSONArray jar=new JSONArray();
+        //hasNext():判断是否存在下一个元素  
+        while(iter.hasNext()){  
+            //如果存在，则调用next实现迭代  
+            JSONObject j=(JSONObject)iter.next();
+            Phone p=new Phone();
+            p.setPhoneName(j.getString("phone"));           
+            try {
+            	Phone pr=(Phone) baseDao.findForObject("PhoneMapper.getPhone", p);
+            	if(pr!=null){
+            		jar.add(pr);
+            	}				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+        } 
+        return jar;
 	}
 
 }
