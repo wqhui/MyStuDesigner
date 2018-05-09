@@ -33,5 +33,7 @@ function batchRun(requestMapping,methodName, data,mark){
 	let url = ROOT_URL + requestMapping+'/'+methodName;
 	return postApi(url, data).then(data=>{
 		eventBus.pub(requestMapping,methodName+mark,data)	
-	})
+	}).catch(error => {
+		eventBus.pub(requestMapping,methodName+mark,{pd:false})				
+	});
 }

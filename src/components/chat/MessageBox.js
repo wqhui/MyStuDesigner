@@ -1,6 +1,7 @@
 import React,{Fragment}  from 'react';
 import * as styles from './MessageBox.less'; 
 import classnames from 'classnames';
+import {Map,List,is} from 'immutable';
 
 import {invokeService} from "../../api/serviceUtil.js";
 import {eventBus} from '../../util/eventBus.js';
@@ -10,13 +11,18 @@ class MessageBox extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state={
-			isPulse:props.messageType==1
+			isPulse:Map({isPulse:props.messageType==1}),
+			isError:Map({isError:false})
 		}
 
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		return true;
+		const {isPulse,isError}=this.state;
+		if(!is(isPulse,nextState.isPulse) || !is(isError,nextState.isError)){
+			return true;
+		}
+		return false;
 	}
 
 
@@ -31,17 +37,25 @@ class MessageBox extends React.Component{
 	}
 	
 	setMsgAnswer=(data)=>{
-		this.setState({
-			isPulse:false
-		})
+		const {id} = this.props;
 		if(data.pd==true){
 			this.props.callAnswer(data.result);
+			this.setState({
+				isPulse:Map({isPulse:false})
+			})
 		}else{
 			this.setState({
-				isError:true
+				isPulse:Map({isPulse:false}),
+				isError:Map({isError:true})
 			})
+			this.props.callAnswer();
+			this.showMsgErrTip(id)
 		}
 
+	}
+
+	showMsgErrTip=()=>{
+		this.props.showMsgErrTip()
 	}
 
 	renderPanel(props,state) {
@@ -51,7 +65,9 @@ class MessageBox extends React.Component{
 				messageType,
 				id
 			} = props;
-			const {isPulse}=state;
+			const {isPulse,isError}=state;
+			let isPulseJs=isPulse.toJS().isPulse;
+			let isErrorJs=isError.toJS().isError;
 			let boxClassName = classnames({
 				[styles["message-box"]]: true,
 				[styles["main-flex-end"]]: !isLeft,
@@ -63,7 +79,6 @@ class MessageBox extends React.Component{
 			});
 			
 			let childrenContent=[];
-			console.log()
 			if(messageType==2){				
 				content.map((item)=>{
 					childrenContent.push(<MessageDetail key={item["phoneId"]+item["phoneName"]} content={item}/>)
@@ -71,15 +86,18 @@ class MessageBox extends React.Component{
 			}else{
 				childrenContent=<span>{content}</span>;
 			}
-
 			return(
 
 				<div className={boxClassName}>
-					{isPulse?<div className={classnames(["fa fa-spinner fa-pulse",[styles["chat-bubble-icon"]]])}></div>
+					{isPulseJs?<div className={classnames(["fa fa-spinner fa-pulse",[styles["chat-bubble-icon"]]])}></div>
 						:''
 					}
+					{isErrorJs==true?<div className={classnames(["fa fa-exclamation-circle",[styles["chat-bubble-icon"]],[styles["chat-bubble-icon-err"]]])} title="发送失败"></div>	
+						:''
+					}
+					
 					<div className={styles["chat-bubble"]}>
-						{childrenContent}						
+						{childrenContent}				
 						<span className={angleClassNames}></span>
 					</div>	
 

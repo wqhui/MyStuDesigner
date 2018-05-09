@@ -24,10 +24,11 @@ export function postApi(url, data = {}) {
 				return;
 			}
 			return jsonObj;
-		}).catch(error => {
+	}).catch(error => {
 			console.error('服务器返回数据必须是json格式', error);
-			throw new Error('fetch data parsing failed. ' + error.message);
-		});
+			console.error('fetch data parsing failed. ' + error.message);
+			
+	});
 }
 
 function encodeParam(value = '') {

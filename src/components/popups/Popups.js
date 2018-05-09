@@ -20,25 +20,25 @@ class Popups extends React.Component{
    	 	super(props);
    	 	eventBus.sub("help","getHelpList",this.setHelpList)
    	 	this.state={
-   	 		content:List([]),
-   	 		isShow:props.isShow?props.isShow.toJS().isShow:false
+   	 		content:List([])
    	 	}   
   	}
 	
   	shouldComponentUpdate(nextProps, nextState) {
-  		let {isShow,content}=this.state;
-  		if(isShow==nextState.isShow && is(nextState.content,content)){
-  			return false;
+  		let {content}=this.state;
+  		let {isShow}=this.props;
+  		if(!is(isShow,nextProps.isShow) || !is(nextState.content,content)){
+  			return true;
   		}
-  		return true;
+  		return false;
   	}
 
   	componentWillReceiveProps(nextProps) {
-  		if(!is(nextProps,this.props)){//如果改变
-  			this.setState({
-	   	 		isShow:nextProps.isShow.toJS().isShow
-	   	 	})  
-  		}
+  		// if(!is(nextProps,this.props)){//如果改变
+  		// 	this.setState({
+	   // 	 		isShow:nextProps.isShow.toJS().isShow
+	   // 	 	})  
+  		// }
   	}
 	
 	componentDidMount() {
@@ -46,25 +46,22 @@ class Popups extends React.Component{
 	}
 
 	setHelpList=(data)=>{
-		this.setState({
-			content:fromJS(data.result)
-		})
+		if(data.pd==true){
+			this.setState({
+				content:fromJS(data.result)
+			})
+		}else{
+			this.setState({
+				content:List([{helpTitle:'与服务器连接失败，请确定您已经联网',helpContent:''}])
+			})
+		}
 	}
 
 	closePopup=(ev)=>{
-		this.setState({
-			isShow:false
-		})
+		this.props.closePopup()
 		ev.preventDefault();//阻止默认提交
-
 	}
 
-	showPopup=(ev)=>{
-		this.setState({
-			isShow:true
-		})
-		return false;
-	}
 	
 
   	renderPanel(){
@@ -72,8 +69,11 @@ class Popups extends React.Component{
   		let widthStyle={
   			width:"0px"
   		}
+		
+		let isShow=this.props.isShow;
+		let isShowJs=isShow.toJS().isShow;
 
-  		if(this.state.isShow){
+  		if(isShowJs){
 			widthStyle={width:"400px"}
 		}
 
@@ -82,11 +82,11 @@ class Popups extends React.Component{
 		)
 		let popClassNames=classnames({
 			[styles["pop-area"]]:true,
-			[styles["help-area"]]:!defaultProps.isPopup,
-			[styles["moveAnimation"]]:this.state.isShow,	
-			[styles["leaveAnimation"]]:!this.state.isShow,						
+			[styles["help-area"]]:true,
+			[styles["moveAnimation"]]:isShowJs,	
+			[styles["leaveAnimation"]]:!isShowJs,						
 		})
-		let {isShow,content}=this.state;
+		let {content}=this.state;
 
 		const {title,isPopup}=defaultProps;
 		content = content.toJS();
@@ -101,19 +101,11 @@ class Popups extends React.Component{
 					{
 						isPopup?<Fragment>{content}</Fragment>
 							:content.map((item)=>{
-									return <HelpMessageItem key={item.helpId} {...item}/>				
+									return <HelpMessageItem key={item.helpId || "item-null-zero"} {...item}/>				
 							})	
 					}						
 				
 				</div>	
-				{
-					isPopup?
-					<div className={styles["pop-btn-area"]}>
-						<a href="www.google.com" onClick={this.closePopup}>确定</a>
-						<a href="www.google.com" className={styles["cancel-btn"]} onClick={this.closePopup}>取消</a>					
-					</div>	
-					:""	
-				}
 			</div>
 		)  	
   	}
@@ -125,6 +117,15 @@ class Popups extends React.Component{
 
 export default Popups;
 
+
+				// {
+				// 	isPopup?
+				// 	<div className={styles["pop-btn-area"]}>
+				// 		<a href="www.google.com" onClick={this.closePopup}>确定</a>
+				// 		<a href="www.google.com" className={styles["cancel-btn"]} onClick={this.closePopup}>取消</a>					
+				// 	</div>	
+				// 	:""	
+				// }
 
 const HelpMessageItem=({helpTitle,helpContent})=>{
 	return (

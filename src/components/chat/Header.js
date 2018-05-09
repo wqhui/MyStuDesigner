@@ -1,6 +1,6 @@
 import React,{Fragment}  from 'react';
 import classnames from "classnames";
-import {Map} from "immutable";
+import {is,Map} from "immutable";
 
 import * as styles from './Header.less';
 import Popups from '../popups/Popups.js';
@@ -16,12 +16,23 @@ class Header extends React.Component{
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		return true;
+		const {isShow}=this.state;
+		const {isCallShow}=this.props;
+		if(!is(isShow,nextState.isShow) || !is(isCallShow,nextProps.isCallShow) ){
+			return true;
+		}
+		return false;
 	}
 
 	showHelpBox=()=>{
 		this.setState({
 			isShow:Map({isShow:true})
+		})		
+	}
+	
+	closeHelpBox=()=>{
+		this.setState({
+			isShow:Map({isShow:false})
 		})		
 	}
 
@@ -46,9 +57,10 @@ class Header extends React.Component{
 						{
 							isCallShowJs?"正在码字回复中...":""
 						}
-					</span>							
+					</span>			
+					<div className={classnames("fa","fa-trash",[styles["help-icon"]])}  title="清空聊天记录"></div>				
 					<div onClick={this.showHelpBox} className={helpIconClassName}  title="帮助"></div>
-					 <Popups isShow={this.state.isShow}></Popups> 
+					<Popups isShow={this.state.isShow} closePopup={this.closeHelpBox}></Popups> 
 				</div>
 		)  	
 	}

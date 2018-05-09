@@ -5,6 +5,8 @@ import * as styles from './ChatBox.less';
 import MessageBox from './MessageBox.js';
 import QuestionBox from './QuestionBox.js';
 import Header from './Header.js';
+import Toast from '../popups/Toast.js';
+
 import * as chatAction from '../../action/chatActions.js';
 import ScrollUtil from '../../util/ScrollUtil.js';
 import {constructMessageItem} from '../../util/ChatMsgUtil.js';
@@ -15,13 +17,14 @@ class ChatBox extends React.Component {
 		super(props);
 		this.state={
 			msgList:List([]),
-			isCallShow:Map({isCallShow:false})
+			isCallShow:Map({isCallShow:false}),
+			toastShow:Map({isShow:false})
 		}
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		let {msgList,isCallShow}=this.state;
-		if(!is(msgList,nextState.msgList) || !is(isCallShow,nextState.isCallShow)){
+		let {msgList,isCallShow,toastShow}=this.state;
+		if(!is(msgList,nextState.msgList) || !is(isCallShow,nextState.isCallShow) || !is(toastShow,nextState.toastShow)){
 			return true;
 		}
 		return false;
@@ -67,14 +70,16 @@ class ChatBox extends React.Component {
 		this.addMsgItem(value);
 	}
 	callAnswer=(vl)=>{
-		let value={};
-		if((typeof vl)=="string"){
-			value=constructMessageItem(vl,true,3);	
-		}else{
-			value=constructMessageItem(vl,true,2);	
-		}
-			
-		this.addMsgItem(value);
+		if(typeof vl !='undefined'){
+			let value={};
+			if((typeof vl)=="string"){
+				value=constructMessageItem(vl,true,3);	
+			}else{
+				value=constructMessageItem(vl,true,2);	
+			}
+			this.addMsgItem(value);
+		}	
+		
 		if(this.state.isCallShow.toJS().isCallShow==true){
 			this.setState({
 				isCallShow:Map({isCallShow:false})
@@ -82,8 +87,14 @@ class ChatBox extends React.Component {
 		}
 	}
 
+	showMsgErrTip=(_id)=>{
+		this.setState({
+			toastShow:Map({isShow:true,content:"消息发送失败，请重试",_id:_id}),
+		})
+	}
+
 	renderPanel(){
-		let {msgList,isCallShow}=this.state;
+		let {msgList,isCallShow,toastShow}=this.state;
 		let msgListJs=msgList.toJS();
 		return(
 			<div className={styles["chat-area"]}>
@@ -91,10 +102,11 @@ class ChatBox extends React.Component {
 				<div className={styles["chat-list-box"]} ref={this.chatBoxRef}>
 					{ 
 						msgListJs.map((item)=>{
-							return	<MessageBox callAnswer={this.callAnswer} key={item.id} {...item}/>
+							return	<MessageBox callAnswer={this.callAnswer} showMsgErrTip={this.showMsgErrTip} key={item.id} {...item}/>
 						})
 					}
 				</div>
+				<Toast toastShow={toastShow}></Toast>
 				<QuestionBox submitQuestion={this.submitQuestion}></QuestionBox>					
 			</div>
 		)  	
