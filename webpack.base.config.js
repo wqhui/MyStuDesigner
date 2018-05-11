@@ -63,9 +63,12 @@ module.exports = {//注意这里是exports不是export
                 use: [
                   {
                     loader: 'file-loader',
-                    // options: {
-                    //     outputPath:'css/'
-                    // }
+                    options: {
+                        //outputPath:'fonts/',
+                        publicPath:'/fonts/',//打包到fonts文件夹
+                        useRelativePath:true,//
+                        name:'[name].[ext]'
+                    }
                   }
                 ]               
             },{ 
@@ -75,9 +78,7 @@ module.exports = {//注意这里是exports不是export
                         fallback: "style-loader",
                         use: [{
                             loader: "css-loader",
-                        },{
-                            loader: "postcss-loader",
-                    }]
+                        }]
                 })
             }
 

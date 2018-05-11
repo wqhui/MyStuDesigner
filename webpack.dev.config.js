@@ -15,9 +15,8 @@
 		port: 8888, //设置默认监听端口，如果省略，默认为”8080“
 		inline: true, //实时刷新
 		proxy: {
-		  "/api": {
+		  "/": {
 		    target: "http://localhost:8080",
-		    pathRewrite: {"^/api" : "/SSM"}
 		  }
 		}
 

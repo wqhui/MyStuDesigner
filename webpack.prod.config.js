@@ -5,6 +5,10 @@ const base = require('./webpack.base.config.js');
 module.exports = merge(base, {
     devtool: 'source-map',//为了能显示，因为懒没弄node server 正常可以省略
     plugins: [
+        new webpack.BannerPlugin({
+            banner:'Design By WuQinghui 2018.06 CUMT EC',
+            entryOnly:false
+        }),
         new UglifyJSPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
