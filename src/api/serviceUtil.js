@@ -2,7 +2,7 @@ import { List, Map, fromJS, is } from 'immutable';
 import {postApi} from './service.js';
 import {eventBus} from '../util/eventBus.js';
 
-const ROOT_URL = "http://localhost:8888/api/";
+const ROOT_URL = "http://localhost:8080/";
 
 let tasks = List();
 

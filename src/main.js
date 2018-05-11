@@ -19,15 +19,16 @@ defAppState.dispatch = Store.dispatch;
 
 ReactDom.render(
 	<Provider store={Store}>
-		<BrowserRouter>
-			<Fragment>
-		        <Route exact  path="/" render={()=>   
-		          <Redirect to="/lawliet"/>                                       
-		        }/>
-		        <Route path="/lawliet" component={App}/>   
-	        </Fragment>                      
-	  	</BrowserRouter>    
+		<App></App> 
 	</Provider>,
     document.getElementById('content')
 );
 
+		// <BrowserRouter>
+		// 	<Fragment>
+		//         <Route exact  path="/" render={()=>   
+		//           <Redirect to="/lawliet"/>                                       
+		//         }/>
+		//         <Route path="/lawliet" component={App}/>   
+	 //        </Fragment>                      
+	 //  	</BrowserRouter>  

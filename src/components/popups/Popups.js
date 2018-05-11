@@ -4,7 +4,6 @@ import classnames from "classnames";
 import {fromJS,List,is} from "immutable";
 
 import * as styles from './Popups.less'; 
-import "../../font-awesome/css/font-awesome.css";
 import {invokeService} from "../../api/serviceUtil.js";
 import {eventBus} from '../../util/eventBus.js';
 /**

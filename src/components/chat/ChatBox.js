@@ -7,6 +7,7 @@ import QuestionBox from './QuestionBox.js';
 import Header from './Header.js';
 import Toast from '../popups/Toast.js';
 
+import '../../font-awesome/css/font-awesome.min.css';
 import * as chatAction from '../../action/chatActions.js';
 import ScrollUtil from '../../util/ScrollUtil.js';
 import {constructMessageItem} from '../../util/ChatMsgUtil.js';
