@@ -26,6 +26,9 @@ public class HelpMsgController extends BaseController{
 	public Object getHelpList(){
 		ModelMap mm=this.getModelMap();	
 		JSONArray ja=helpMsgService.getHlepMsgList();
+		if(ja==null){
+			return mm;
+		}
 		mm.replace("pd", true);
 		mm.addAttribute("result",ja);
 		return mm;

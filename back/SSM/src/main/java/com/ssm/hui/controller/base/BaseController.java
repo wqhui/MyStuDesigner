@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ssm.hui.service.AdminService;
 import com.ssm.hui.service.HelpMsgService;
+import com.ssm.hui.service.IpMsgService;
 import com.ssm.hui.service.PhoneService;
 import com.ssm.hui.service.UserService;
 
@@ -52,6 +53,9 @@ public class BaseController {
 	
 	@Resource(name="phoneService")
 	protected PhoneService phoneService;
+	
+	@Resource(name="ipMsgService")
+	protected IpMsgService ipMsgService;
 	
 	//== 公共部分
 	

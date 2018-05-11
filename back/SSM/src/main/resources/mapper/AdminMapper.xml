@@ -58,7 +58,7 @@
 	<insert id="saveAdmin" parameterType="Admin" useGeneratedKeys="true" keyProperty="adminId">
 		insert into 
 		<include refid="tableName"></include>
-		(<include refid="Field"></include>)
+		(<include refid="Field"></include>,password)
 		values(<include refid="FieldValue"></include>)	
 	</insert>
 	
@@ -82,7 +82,7 @@
 		  	display_name = #{displayName},  
 		  </if>  
 		  <if test="password != null and password != ''" >  		
-		  	password = #{password},  
+		  	password = #{password}
 		  </if>  
 		</set>  
 		where admin_id = #{adminId}

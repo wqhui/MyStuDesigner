@@ -26,6 +26,12 @@ public class FormController extends BaseController{
 		return "index";
 	}
 	
+	@RequestMapping(value="/lawliet")
+	public String welcomeIndexForm(){
+		return "index";
+	}
+	
+	
 	@RequestMapping(value="/back/{jspName}")
 	public String skipBackForm(@PathVariable String jspName){
 		jspName="/back/"+jspName;		

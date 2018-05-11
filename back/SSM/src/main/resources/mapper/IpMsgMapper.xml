@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="IpMsgMapper">
+
+
+
+	<!--表名 -->
+	<sql id="tableName">
+		ip_msg
+	</sql>
+	
+	<!--返回 -->
+	<resultMap type="IpMsg" id="IpMsgMap">
+		<id column="ip_id" property="ipId" />
+		<result column="ip_address" property="ipAddress" />
+		<result column="ip_count" property="ipCount" />
+		<result column="is_ban" property="isBan" />
+	</resultMap>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		ip_address,
+		ip_count,
+		is_ban
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ipAddress},
+		#{ipCount},
+		#{isBan}
+	</sql>
+	
+	<!-- 查询信息 -->
+	<select id="getIpMsg" parameterType="IpMsg" resultType="IpMsg">
+		select ip_id,
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="ipId != null and ipId != '' and ipId != 0">
+			and ip_id=#{ipId}
+		</if>
+	</select>
+	
+	<!-- 查询列表 -->
+	<select id="getIpMsgList" parameterType="IpMsg" resultType="IpMsg">
+		select ip_id,
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+	</select>
+	
+	<!-- 插入信息 -->
+	<insert id="saveIpMsg" parameterType="IpMsg" useGeneratedKeys="true" keyProperty="ipId">
+		insert into 
+		<include refid="tableName"></include>
+		(<include refid="Field"></include>)
+		values(<include refid="FieldValue"></include>)	
+	</insert>
+	
+	<!-- 删除信息  -->
+    <delete id="deleteIpMsg" parameterType="IpMsg">
+     	delete 
+     	from 
+     	<include refid="tableName"></include>
+     	where ip_id = #{ipId}
+    </delete>
+	
+		
+	<!-- 修改信息 -->
+	<update id="updateIpMsgById" parameterType="IpMsg">  
+	    update 
+	    <include refid="tableName"></include>
+	    <set >  
+		    <if test="ipAddress != null and ipAddress != ''">
+				ip_address=#{ipAddress},
+			</if>
+			<if test="ipCount &gt; -1 ">
+				ip_count=#{ipCount},
+			</if> 
+			<if test="isBan != null">
+				is_ban=#{isBan}
+			</if>  					
+	    </set>  
+	    where ip_id = #{ipId}
+  	</update> 
+  
+</mapper>

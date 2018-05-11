@@ -19,14 +19,28 @@
 
 
 	<!--2：配置视图解析器 显示ViewResolver -->
-	<bean
+	
+		<!-- 定义HTML文件的位置 -->  
+     <bean id="htmlviewResolver"    
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">   
+        <property name="viewClass" value="com.ssm.hui.util.HtmlResourceView"/>  
+        <property name="order" value="0" />  
+        <!-- 前缀 -->
+		<property name="prefix" value="/WEB-INF/content/" />
+        <property name="suffix" value=".html" />    
+    </bean> 
+		<!-- 定义JSP文件的位置 -->  
+	<bean id="jspViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="order" value="1" />  
 		<!-- 前缀 -->
 		<property name="prefix" value="/WEB-INF/content/" />
 		<!-- 后缀 -->
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	
 	<!-- DispatcherServlet不会拦截以/images开头的所有请求路径，并当作静态资源 -->
 	<mvc:resources location="/images/" mapping="/images/**"/>  
 	

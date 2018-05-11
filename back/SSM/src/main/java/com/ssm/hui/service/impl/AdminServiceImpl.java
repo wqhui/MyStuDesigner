@@ -75,6 +75,7 @@ public class AdminServiceImpl implements AdminService {
 			}
 			//return helpMsgList;
 		} catch (Exception e) {
+			ja=null;
 			e.printStackTrace();
 		}
 		return ja;

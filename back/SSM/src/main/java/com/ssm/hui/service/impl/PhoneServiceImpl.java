@@ -37,6 +37,7 @@ public class PhoneServiceImpl implements PhoneService {
 				ja.add(hmo);
 			}
 		} catch (Exception e) {
+			ja=null;
 			e.printStackTrace();
 		}
 		return ja;

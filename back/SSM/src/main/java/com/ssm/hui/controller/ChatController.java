@@ -26,6 +26,7 @@ public class ChatController extends BaseController {
 	public Object chatQuestion(String question,HttpServletRequest request){
 		ModelMap mm=this.getModelMap();	
 		String ip=this.getIpAddr(request);
+						
 		JSONObject requestMsgByTL=this.requestMsgByTL(question);
 		String jsonStr=this.httpPost(requestMsgByTL);
 

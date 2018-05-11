@@ -27,6 +27,9 @@ public class PhoneController extends BaseController {
 	public Object getPhoneList(){
 		ModelMap mm=this.getModelMap();	
 		JSONArray ja=phoneService.getPhoneList();
+		if(ja==null){
+			return mm;
+		}
 		mm.replace("pd", true);
 		mm.addAttribute("result",ja);
 		return mm;

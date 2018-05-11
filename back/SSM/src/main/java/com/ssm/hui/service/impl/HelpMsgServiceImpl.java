@@ -36,6 +36,7 @@ public class HelpMsgServiceImpl implements HelpMsgService {
 			}
 			//return helpMsgList;
 		} catch (Exception e) {
+			ja=null;
 			e.printStackTrace();
 		}
 		return ja;

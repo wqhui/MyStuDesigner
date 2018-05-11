@@ -82,6 +82,9 @@ public class AdminController extends BaseController{
 	public Object getAdminList(){
 		ModelMap mm=this.getModelMap();	
 		JSONArray ja=adminService.getAdminList();
+		if(ja==null){
+			return mm;
+		}
 		mm.replace("pd", true);
 		mm.addAttribute("result",ja);
 		return mm;

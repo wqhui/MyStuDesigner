@@ -33,7 +33,7 @@ public class MenuController  extends BaseController{
 			mm.addAttribute("msg","not login");
 			return mm;	
 		}				
-		String menuStringArray= "[{id:\"1\",text:\"管理员管理\",url:\"/back/admin_manager\"},{id:\"2\",text:\"帮助信息管理\",url:\"/back/help_msg\"},{id:\"3\",text:\"手机信息管理\",url:\"/back/phone_manager\"}]";
+		String menuStringArray= "[{id:\"1\",text:\"管理员管理\",url:\"/back/admin_manager\"},{id:\"2\",text:\"帮助信息管理\",url:\"/back/help_msg\"},{id:\"3\",text:\"手机信息管理\",url:\"/back/phone_manager\"},{id:\"4\",text:\"IP信息管理\",url:\"/back/ip_manager\"}]";
 		JSONArray ja=JSONArray.fromObject(menuStringArray);
 		mm.replace("pd", true);
 		mm.addAttribute("result",ja);
