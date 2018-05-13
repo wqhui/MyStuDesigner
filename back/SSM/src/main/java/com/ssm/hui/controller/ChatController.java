@@ -29,7 +29,7 @@ public class ChatController extends BaseController {
 						
 		JSONObject requestMsgByTL=this.requestMsgByTL(question);
 		String jsonStr=this.httpPost(requestMsgByTL);
-
+		
 		JSONObject jo=JSONObject.fromObject(jsonStr);
 		JSONArray ja=(JSONArray) jo.get("results");
 		if(ja!=null){

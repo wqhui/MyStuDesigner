@@ -4,8 +4,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.ssm.hui.dao.BaseDao;
 import com.ssm.hui.domain.Admin;
 import com.ssm.hui.service.AdminService;
@@ -63,6 +66,9 @@ public class AdminServiceImpl implements AdminService {
 			return jo;//查询出错
 		}
 	}
+	
+
+
 
 	@Override
 	public JSONArray getAdminList() {
@@ -138,5 +144,34 @@ public class AdminServiceImpl implements AdminService {
 			
 		}
 	}
+
+	@Override
+	public JSONObject getAdminPageList(Integer pageNum, Integer pageSize) {
+		RowBounds rb=new RowBounds(pageNum,pageSize);
+		JSONObject jo=new JSONObject();
+		JSONArray ja=new JSONArray();
+		try {
+			Page<Admin> page=(Page<Admin>) baseDao.findForPageList("AdminMapper.getAdminList", null,rb);
+			System.out.println(page);
+			
+			long total=page.getTotal();	
+		
+			List<Admin> adminList=page.getResult() ;			
+			for(Admin ado:adminList){
+				if(ado!=null){
+					ja.add(ado);
+				}else{
+					--total;
+				}
+			}
+			jo.put("total", total);//总页数
+			jo.put("rows",ja);
+		} catch (Exception e) {
+			jo=null;
+			e.printStackTrace();
+		}		
+		return jo;
+	}
+
 
 }

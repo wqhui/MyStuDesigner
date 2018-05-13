@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
 import com.ssm.hui.dao.BaseDao;
+import com.ssm.hui.domain.Phone;
 import com.ssm.hui.domain.Phone;
 import com.ssm.hui.service.PhoneService;
 
@@ -116,6 +119,33 @@ public class PhoneServiceImpl implements PhoneService {
 			}
         } 
         return jar;
+	}
+
+	@Override
+	public JSONObject getPhonePageList(Integer pageNum, Integer pageSize) {
+		RowBounds rb=new RowBounds(pageNum,pageSize);
+		JSONObject jo=new JSONObject();
+		JSONArray ja=new JSONArray();
+		try {
+			Page<Phone> page=(Page<Phone>) baseDao.findForPageList("PhoneMapper.getPhoneList", null,rb);
+			System.out.println(page);			
+			long total=page.getTotal();					
+			List<Phone> PhoneList=page.getResult() ;	
+			for(Phone ado:PhoneList){
+				if(ado!=null){
+					ja.add(ado);
+				}else{
+					--total;
+				}
+				
+			}
+			jo.put("total", total);//总页数
+			jo.put("rows",ja);			
+		} catch (Exception e) {
+			jo=null;
+			e.printStackTrace();
+		}		
+		return jo;
 	}
 
 }

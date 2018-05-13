@@ -74,7 +74,7 @@ function reloadData(){
 
 $(function(){
 	$('#reForm').datagrid({    
-	    url:'${pageContext.request.contextPath}/phone/getPhoneList',
+	    url:'${pageContext.request.contextPath}/phone/getPhonePageList',
 	    fitColumns:true,
 	    fit:true,
 	    striped:true,/*斑马线*/
@@ -84,10 +84,10 @@ $(function(){
 	    singleSelect:true,
 	    rownumbers:true,
 	    /*分页*/
-		//pagination:true,
-		//pageNumber:1,
-		//pageSize:15,
-		//pageList:[15,30,50,100], 
+		pagination:true,
+		pageNumber:1,
+		pageSize:15,
+		pageList:[15,30,50,100], 
 		toolbar:[{
 	    	id:'add',
 	    	text:'添加',

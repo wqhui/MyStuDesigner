@@ -11,6 +11,7 @@ import com.ssm.hui.controller.base.BaseController;
 import com.ssm.hui.domain.IpMsg;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /** 
  * @author hui 
@@ -28,6 +29,19 @@ public class IpMsgController extends BaseController {
 		JSONArray ja=ipMsgService.getIpMsgList();
 		mm.replace("pd", true);
 		mm.addAttribute("result",ja);
+		return mm;
+	}
+	
+	@RequestMapping("/getIpMsgPageList")
+	@ResponseBody
+	public Object getIpMsgPageList(Integer page,Integer rows){
+		ModelMap mm=this.getModelMap();	
+		JSONObject jo=ipMsgService.getIpMsgPageList(page,rows);
+		if(jo==null){
+			return mm;
+		}
+		mm.replace("pd", true);
+		mm.addAttribute("result",jo);
 		return mm;
 	}
 	

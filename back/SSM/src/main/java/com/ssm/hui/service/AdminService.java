@@ -18,4 +18,5 @@ public interface AdminService {
 	String deleteAdmin(Admin am);
 	Admin getAdminById(Admin am);
 	String updateAdminPsw(Admin am);
+	JSONObject getAdminPageList(Integer pageNum, Integer pageSize);
 }

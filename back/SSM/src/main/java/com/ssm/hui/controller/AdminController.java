@@ -90,6 +90,19 @@ public class AdminController extends BaseController{
 		return mm;
 	}
 	
+	@RequestMapping("/getAdminPageList")
+	@ResponseBody
+	public Object getAdminPageList(Integer page,Integer rows){
+		ModelMap mm=this.getModelMap();	
+		JSONObject jo=adminService.getAdminPageList(page,rows);
+		if(jo==null){
+			return mm;
+		}
+		mm.replace("pd", true);
+		mm.addAttribute("result",jo);
+		return mm;
+	}
+	
 	@RequestMapping("/saveOrUpdateAdmin")
 	@ResponseBody
 	public Object saveOrUpdateAdmin(String adminId,String loginName,String password,String displayName){

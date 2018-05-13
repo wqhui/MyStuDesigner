@@ -4,6 +4,7 @@ package com.ssm.hui.service;
 import com.ssm.hui.domain.Phone;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /** 
  * @author hui 
@@ -17,4 +18,5 @@ public interface PhoneService {
 	Phone getPhoneById(Phone p);
 	String updatePhoneById(Phone p);
 	JSONArray getPhoneListByList(JSONArray ja);
+	JSONObject getPhonePageList(Integer page, Integer rows);
 }

@@ -4,6 +4,7 @@ package com.ssm.hui.service;
 import com.ssm.hui.domain.IpMsg;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /** 
  * @author hui 
@@ -16,4 +17,6 @@ public interface IpMsgService {
 	String deleteIpMsg(IpMsg im);
 	IpMsg getIpMsgById(IpMsg im);
 	String updateIpMsgById(IpMsg im);
+	String linkIpMsg(IpMsg im);
+	JSONObject getIpMsgPageList(Integer page, Integer rows);
 }	

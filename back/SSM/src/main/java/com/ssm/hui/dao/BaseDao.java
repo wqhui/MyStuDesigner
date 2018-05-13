@@ -1,4 +1,7 @@
 package com.ssm.hui.dao;
+
+import org.apache.ibatis.session.RowBounds;
+
 /** 
  * 基础dao类，基本的CRUD方法
  * @author hui 
@@ -53,6 +56,18 @@ public interface BaseDao {
 	 * @throws Exception
 	 */
 	public Object findForList(String str, Object obj) throws Exception;
+	
+	
+	/**
+	 * 根据条件查询分页列表 
+	 * @param str
+	 * @param obj
+	 * @param rb
+	 * @return
+	 * @throws Exception 
+	 * @returnType Object
+	 */
+	public Object findForPageList(String str, Object obj ,RowBounds rb) throws Exception;
 	
 	/**
 	 * 查找对象封装成Map

@@ -11,6 +11,7 @@ import com.ssm.hui.controller.base.BaseController;
 import com.ssm.hui.domain.Phone;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 
 /** 
@@ -32,6 +33,19 @@ public class PhoneController extends BaseController {
 		}
 		mm.replace("pd", true);
 		mm.addAttribute("result",ja);
+		return mm;
+	}
+	
+	@RequestMapping("/getPhonePageList")
+	@ResponseBody
+	public Object getPhonePageList(Integer page,Integer rows){
+		ModelMap mm=this.getModelMap();	
+		JSONObject jo=phoneService.getPhonePageList(page,rows);
+		if(jo==null){
+			return mm;
+		}
+		mm.replace("pd", true);
+		mm.addAttribute("result",jo);
 		return mm;
 	}
 	

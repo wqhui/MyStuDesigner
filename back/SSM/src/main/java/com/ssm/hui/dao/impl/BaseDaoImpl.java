@@ -2,6 +2,7 @@ package com.ssm.hui.dao.impl;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -82,6 +83,25 @@ public class BaseDaoImpl implements BaseDao {
 	@Override
 	public Object findForList(String str, Object obj) throws Exception {
 		return sqlSessionTemplate.selectList(str, obj);
+	}
+	
+	/**
+	 * 根据条件查询分页列表 
+	 * @param str
+	 * @param obj
+	 * @param rb
+	 * @return
+	 * @throws Exception 
+	 * @returnType Object
+	 */
+	@Override
+	public Object findForPageList(String str, Object obj ,RowBounds rb) throws Exception {		
+		if(rb.getLimit()>0 && rb.getOffset()>0){
+			return sqlSessionTemplate.selectList(str, obj,rb);
+		}else{
+			return sqlSessionTemplate.selectList(str, obj,new RowBounds(1,20));
+		}
+		
 	}
 
 	@Override

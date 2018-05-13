@@ -11,6 +11,7 @@ import com.ssm.hui.controller.base.BaseController;
 import com.ssm.hui.domain.HelpMsg;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /** 
  * @author hui 
@@ -31,6 +32,19 @@ public class HelpMsgController extends BaseController{
 		}
 		mm.replace("pd", true);
 		mm.addAttribute("result",ja);
+		return mm;
+	}
+	
+	@RequestMapping("/getHelpPageList")
+	@ResponseBody
+	public Object getHelpPageList(Integer page,Integer rows){
+		ModelMap mm=this.getModelMap();	
+		JSONObject jo=helpMsgService.getHelpPageList(page,rows);
+		if(jo==null){
+			return mm;
+		}
+		mm.replace("pd", true);
+		mm.addAttribute("result",jo);
 		return mm;
 	}
 	

@@ -3,6 +3,7 @@ package com.ssm.hui.service;
 import com.ssm.hui.domain.HelpMsg;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /** 
  * @author hui 
@@ -16,4 +17,5 @@ public interface HelpMsgService {
 	String deleteHelpMsg(HelpMsg hm);
 	HelpMsg getHelpMsgById(HelpMsg hm);
 	String updateHelpMsgById(HelpMsg hm);
+	JSONObject getHelpPageList(Integer page, Integer rows);
 }
